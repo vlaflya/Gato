@@ -16918,6 +16918,7 @@ GameObject:
   - component: {fileID: 890459554}
   - component: {fileID: 890459556}
   - component: {fileID: 890459557}
+  - component: {fileID: 890459558}
   m_Layer: 6
   m_Name: ScoreController
   m_TagString: Untagged
@@ -17034,6 +17035,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!210 &890459558
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890459553}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
+  m_SortAtRoot: 0
 --- !u!1 &921936596
 GameObject:
   m_ObjectHideFlags: 0

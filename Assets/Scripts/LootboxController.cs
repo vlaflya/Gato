@@ -36,9 +36,10 @@ public class LootboxController : MonoBehaviour
     private bool _active;
     private int _lastScore;
     private int _currentIteration;
+    private int _currentUnluck = 0;
     private Rarity _currentRarity = Rarity.Normal;
 
-    public event Action<string> GaveCat;
+    public event Action<string, Rarity> GaveCat;
     public event Action ReadyToGiveCat;
 
     private const string SILUETE_PATH = "waifusSiluets/";
@@ -46,11 +47,12 @@ public class LootboxController : MonoBehaviour
     private const float ITERATIONS_GIVEOUT_MULT = 2;
     private const float ITERATIONS_RARE_MULT = 3;
     private const float ITERATIONS_ULTRA_RARE_MULT = 2;
+    private const float UNLUCK_GIVEOUT_MULT = 0.2f;
     private const int SCORE_CHECKPOINT = 500;
-    private const float GIVEOUT_CHANCE = 40;
-    private const float RARE_CHANCE = 40;
-    private const float SRARE_CHANCE = 8;
-    private const float SSRARE_CHANCE = 3;
+    private const float GIVEOUT_CHANCE = 50;
+    private const float RARE_CHANCE = 30;
+    private const float SRARE_CHANCE = 5;
+    private const float SSRARE_CHANCE = 2;
 
     public void Initialize(int startScore)
     {
@@ -97,7 +99,7 @@ public class LootboxController : MonoBehaviour
                 _unboxParticles.Play();
                 _siluete.gameObject.SetActive(false);
                 _backParticles.Stop();
-                GaveCat?.Invoke(name);
+                GaveCat?.Invoke(name, _currentRarity);
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     _stars.Show(currentSettings.Rarity);
@@ -118,33 +120,38 @@ public class LootboxController : MonoBehaviour
         });
     }
 
-    public void CalculateGiveout(int score)
+    public void CalculateGiveout(int score, bool test = false)
     {
-        if (_active)
-            return;
-        if (score < SCORE_CHECKPOINT * _currentIteration + _lastScore)
-            return;
-        float giveoutChance = UnityEngine.Random.Range(0f, 100f);
-        if (giveoutChance + _currentIteration * ITERATIONS_GIVEOUT_MULT > GIVEOUT_CHANCE)
+        if (!test)
         {
-            _currentIteration++;
-            if (_currentIteration > MAX_ITERATIONS)
-                _currentIteration = MAX_ITERATIONS;
-            return;
+            if (_active)
+                return;
+            if (score < SCORE_CHECKPOINT * _currentIteration + _lastScore)
+                return;
+            float giveoutChance = UnityEngine.Random.Range(0f, 100f);
+            if (giveoutChance + _currentIteration * ITERATIONS_GIVEOUT_MULT > GIVEOUT_CHANCE)
+            {
+                _currentIteration++;
+                if (_currentIteration > MAX_ITERATIONS)
+                    _currentIteration = MAX_ITERATIONS;
+                return;
+            }
         }
         _lastScore = score;
         _currentIteration = 1;
         _active = true;
         ReadyToGiveCat?.Invoke();
         float rarityChance = UnityEngine.Random.Range(0f, 100f);
-        if (rarityChance < SSRARE_CHANCE + _currentIteration)
+        if (rarityChance < SSRARE_CHANCE + _currentIteration + _currentUnluck * UNLUCK_GIVEOUT_MULT)
         {
             _currentRarity = Rarity.SSRare;
+            _currentUnluck = 0;
             return;
         }
-        if (rarityChance < SRARE_CHANCE + _currentIteration * ITERATIONS_ULTRA_RARE_MULT)
+        if (rarityChance < SRARE_CHANCE + _currentIteration * ITERATIONS_ULTRA_RARE_MULT + _currentUnluck * UNLUCK_GIVEOUT_MULT)
         {
             _currentRarity = Rarity.SRare;
+            _currentUnluck = 0;
             return;
         }
         if (rarityChance < RARE_CHANCE + _currentIteration * ITERATIONS_RARE_MULT)
@@ -153,6 +160,7 @@ public class LootboxController : MonoBehaviour
             return;
         }
         _currentRarity = Rarity.Normal;
+        _currentUnluck++;
     }
 }
 

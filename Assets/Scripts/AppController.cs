@@ -74,6 +74,14 @@ public class AppController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _lootboxController.CalculateGiveout(_scoreController.TotalScore, true);
+        }
+    }
+
     private void OnClickedLootboxButton()
     {
         if (_firstLaunch)
@@ -81,11 +89,11 @@ public class AppController : MonoBehaviour
         _lootboxController.GiveCat();
     }
 
-    private void OnLootBoxOpened(string catId)
+    private void OnLootBoxOpened(string catId, Rarity rarity)
     {
         if (_firstLaunch)
             _tutorialController.ContinueTutorial();
-        _spawner.CreateNewCat(catId);
+        _spawner.CreateNewCat(catId, rarity);
     }
 
     private void ChangeSound()

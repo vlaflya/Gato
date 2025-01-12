@@ -31,14 +31,14 @@ public class CatsSpawner : MonoBehaviour
         SpawnedCat?.Invoke(cat);
     }
 
-    public void CreateNewCat(string catId)
+    public void CreateNewCat(string catId, Rarity rarity)
     {
         var cat = SpawnCat();
         var topRightPos = Camera.main.ViewportToWorldPoint(Vector3.one) - Vector3.one * 10;
         var bottomLeftPos = Camera.main.ViewportToWorldPoint(Vector3.zero) + Vector3.one * 10;
         cat.transform.position = Vector3.zero;
         SpawnedCat?.Invoke(cat);
-        cat.Initialize(catId);
+        cat.Initialize(catId, rarity);
     }
 
     private CatController SpawnCat()

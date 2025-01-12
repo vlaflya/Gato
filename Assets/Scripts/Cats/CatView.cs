@@ -5,19 +5,19 @@ public class CatView : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer _renderer;
-    [SerializeField]
-    private ParticleSystem _bounceParticles;
 
     public bool Flipped => _flipped;
+    private ParticleSystem _bounceParticles;
     private bool _flipped;
     private Camera _camera;
     private Vector3 _startScale;
     private Tween _bounceTween;
     private const string SPRITE_PATH = "waifusSprites/";
 
-    public void Initialize(string id)
+    public void Initialize(string id, ParticleSystem particles)
     {
         _camera = Camera.main;
+        _bounceParticles = particles;
         _startScale = transform.localScale;
         _renderer.sprite = Resources.Load<Sprite>(SPRITE_PATH + id);
         gameObject.AddComponent<PolygonCollider2D>();

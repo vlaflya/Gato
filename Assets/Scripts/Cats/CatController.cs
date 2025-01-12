@@ -3,20 +3,23 @@ using System.Collections;
 using UnityEngine;
 using UniRx;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class CatController : MonoBehaviour
 {
     [SerializeField]
     private CatView _view;
     [SerializeField]
-    private int _scoreValue;
-    [SerializeField]
     private float _passiveDelay;
     [SerializeField]
     private Rigidbody2D _rigidbody;
     [SerializeField]
     private AudioSource _tapSound;
+    [SerializeField]
+    private List<RaritySettings> _raritySettings;
 
+    private Rarity _rarity;
+    private RaritySettings _currentSettings;
     private Camera _camera;
     private Coroutine _passiveScoreGenerationCoroutine;
     private Coroutine _tapCoroutine;
@@ -54,11 +57,13 @@ public class CatController : MonoBehaviour
         _targetScale = transform.localScale;
     }
 
-    public void Initialize(string id)
+    public void Initialize(string id, Rarity rarity)
     {
+        _rarity = rarity;
+        _currentSettings = GetCurrentSettings();
         _id = id;
         _uniqId = DateTime.Now.ToString();
-        _view.Initialize(id);
+        _view.Initialize(id, _currentSettings.TapParticles);
         _view.Bounce();
         _view.Twitch();
         OnChanged();
@@ -67,13 +72,26 @@ public class CatController : MonoBehaviour
     public void OnDataLoaded(CatData data)
     {
         _canMove = true;
+        _rarity = data.Rarity;
+        _currentSettings = GetCurrentSettings();
         _id = data.CatId;
         _uniqId = data.UniqId;
-        _view.Initialize(data.CatId);
+        _view.Initialize(data.CatId, _currentSettings.TapParticles);
         transform.position = new Vector3(data.X, data.Y, 0);
         transform.localScale = Vector3.one * data.Scale;
         if (data.Flipped)
             _view.Flip();
+    }
+
+    private RaritySettings GetCurrentSettings()
+    {
+        foreach (var settings in _raritySettings)
+        {
+            if(settings.Rarity == _rarity){
+                return settings;
+            }
+        }
+        return null;
     }
 
     private void Update()
@@ -134,7 +152,7 @@ public class CatController : MonoBehaviour
             {
                 _canTap = false;
                 _tapCoroutine = StartCoroutine(TapDelay());
-                GeneratedScore?.Invoke(_scoreValue);
+                GeneratedScore?.Invoke(_currentSettings.ScoreValue);
                 if (!_tapSound.isPlaying)
                 {
                     _tapSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
@@ -160,7 +178,8 @@ public class CatController : MonoBehaviour
             X = transform.position.x,
             Y = transform.position.y,
             Scale = transform.localScale.y,
-            Flipped = _view.Flipped
+            Flipped = _view.Flipped,
+            Rarity = _currentSettings.Rarity
         });
     }
 
@@ -172,7 +191,7 @@ public class CatController : MonoBehaviour
     private IEnumerator GenerateScore()
     {
         yield return new WaitForSecondsRealtime(_passiveDelay);
-        GeneratedScore?.Invoke(_scoreValue);
+        GeneratedScore?.Invoke(_currentSettings.ScoreValue);
         _passiveScoreGenerationCoroutine = StartCoroutine(GenerateScore());
     }
 
@@ -188,5 +207,13 @@ public class CatController : MonoBehaviour
             StopCoroutine(_passiveScoreGenerationCoroutine);
         if (_tapCoroutine != null)
             StopCoroutine(_tapCoroutine);
+    }
+
+    [Serializable]
+    public class RaritySettings
+    {
+        public Rarity Rarity;
+        public int ScoreValue;
+        public ParticleSystem TapParticles;
     }
 }
