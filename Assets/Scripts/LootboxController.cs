@@ -27,6 +27,12 @@ public class LootboxController : MonoBehaviour
     [SerializeField]
     private LootboxData _data;
 
+    [SerializeField]
+    private AudioSource _startSound;
+
+    [SerializeField]
+    private AudioSource _sucessSound;
+
     private bool _active;
     private int _startScore;
     private int _currentIteration;
@@ -36,8 +42,8 @@ public class LootboxController : MonoBehaviour
     public event Action ReadyToGiveCat;
 
     private const string SILUETE_PATH = "waifusSiluets/";
-    private const int MAX_ITERATIONS = 4;
-    private const float ITERATIONS_GIVEOUT_MULT = 4;
+    private const int MAX_ITERATIONS = 6;
+    private const float ITERATIONS_GIVEOUT_MULT = 2;
     private const float ITERATIONS_RARE_MULT = 3;
     private const float ITERATIONS_ULTRA_RARE_MULT = 2;
     private const int SCORE_CHECKPOINT = 500;
@@ -83,21 +89,27 @@ public class LootboxController : MonoBehaviour
         _siluete.transform.localScale = Vector3.zero;
         _boxTransform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutQuad).OnComplete(() =>
         {
+            _startSound.Play();
             _backParticles.Play();
+            DOVirtual.DelayedCall(2.5f, () => _sucessSound.Play());
             _siluete.transform.DOScale(Vector3.one * 3f, 3).OnComplete(() =>
             {
                 _unboxParticles.Play();
                 _siluete.gameObject.SetActive(false);
                 _backParticles.Stop();
                 GaveCat?.Invoke(name);
-                DOVirtual.DelayedCall(0.5f, () =>
+                DOVirtual.DelayedCall(1f, () =>
                 {
                     _stars.Show(currentSettings.Rarity);
                 });
-                currentSettings.BackSprite.DOFade(1, 0.8f);
-                DOVirtual.DelayedCall(3, () =>
+                DOVirtual.DelayedCall(5f, () =>
                 {
                     _stars.Hide();
+                });
+                currentSettings.Particles.Play();
+                currentSettings.BackSprite.DOFade(1, 0.8f);
+                DOVirtual.DelayedCall(5.5f, () =>
+                {
                     currentSettings.BackSprite.DOFade(0, 0.3f);
                     _active = false;
                     _boxTransform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutQuad);
@@ -149,6 +161,7 @@ public class RaritySettings
     public Rarity Rarity;
     public string BaseName;
     public SpriteRenderer BackSprite;
+    public ParticleSystem Particles;
 }
 
 public enum Rarity

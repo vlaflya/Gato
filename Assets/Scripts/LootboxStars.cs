@@ -8,6 +8,9 @@ public class LootboxStars : MonoBehaviour
     [SerializeField]
     private List<RarityStars> _stars;
 
+    [SerializeField]
+    private AudioSource _starSound;
+
     private RarityStars _currentStars;
 
     public void Show(Rarity rarity)
@@ -23,6 +26,11 @@ public class LootboxStars : MonoBehaviour
         for (int i = 0; i < _currentStars.StarsAnimators.Count; i++)
         {
             var star = _currentStars.StarsAnimators[i];
+            seq.AppendCallback(() =>
+            {
+                _starSound.pitch += 0.1f;
+                _starSound.Play();
+            });
             seq.Append(star.transform.DOScale(Vector3.one, 0.5f));
             seq.Join(star.transform.DOLocalRotate(Vector3.forward * 360, 0.5f, RotateMode.FastBeyond360));
             seq.AppendInterval(0.05f);
@@ -38,6 +46,7 @@ public class LootboxStars : MonoBehaviour
 
     public void Hide()
     {
+        _starSound.pitch = 1;
         for (int i = 0; i < _currentStars.StarsAnimators.Count; i++)
         {
             var star = _currentStars.StarsAnimators[i];

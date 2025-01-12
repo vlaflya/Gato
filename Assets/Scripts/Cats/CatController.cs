@@ -13,6 +13,8 @@ public class CatController : MonoBehaviour
     private float _passiveDelay;
     [SerializeField]
     private Rigidbody2D _rigidbody;
+    [SerializeField]
+    private AudioSource _tapSound;
 
     private Camera _camera;
     private Coroutine _passiveScoreGenerationCoroutine;
@@ -75,6 +77,11 @@ public class CatController : MonoBehaviour
             {
                 _isDragged = false;
                 return;
+            }
+            if (!_tapSound.isPlaying)
+            {
+                _tapSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                _tapSound.Play();
             }
             var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition) + _dragOffset;
             mousePosition.z = 0;

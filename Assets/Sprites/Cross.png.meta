@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 41639143774241740ab840c65b8cf37f
+guid: 0cabe8526f230bf44b8200c894c7d951
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1495483829112979399
-    second: QuitIcon_0
+      213: 8482712648628362555
+    second: Cross_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: QuitIcon_0
+      name: Cross_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 21
-        height: 21
+        x: 5
+        y: 4
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 930416e7169fe3be0800000000000000
-      internalID: -1495483829112979399
+      spriteID: b3dd439e536a8b570800000000000000
+      internalID: 8482712648628362555
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      QuitIcon_0: -1495483829112979399
+      Cross_0: 8482712648628362555
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -29,12 +29,16 @@ public class AppController : MonoBehaviour
     [SerializeField]
     private TutorialController _tutorialController;
 
+    [SerializeField]
+    private TapObject _soundButton;
+
     private bool _firstLaunch;
     private List<CatData> _data = new List<CatData>();
 
     private const string CATS_SAVE_KEY = "CatsData";
     private const string FIRST_LAUNCH_SAVE_KEY = "FirstLaunch";
     private const string OVERLAY_SAVE_KEY = "Overlay";
+    private const string SOUND_SAVE_KEY = "Sound";
     private const string SCORE_SAVE_KEY = "Score";
 
     private void Awake()
@@ -52,6 +56,8 @@ public class AppController : MonoBehaviour
         _lootboxButton.Tapped += OnClickedLootboxButton;
         _spawner.SpawnedCat += OnSpawnedCat;
         LoadData();
+        _soundButton.OnClick += ChangeSound;
+        LoadSound();
         foreach (var catInfo in _data)
         {
             _spawner.LoadCat(catInfo);
@@ -82,6 +88,24 @@ public class AppController : MonoBehaviour
         _spawner.CreateNewCat(catId);
     }
 
+    private void ChangeSound()
+    {
+        AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
+        PlayerPrefs.SetFloat(SOUND_SAVE_KEY, AudioListener.volume);
+    }
+
+    private void LoadSound()
+    {
+        if (PlayerPrefs.HasKey(SOUND_SAVE_KEY))
+        {
+            AudioListener.volume = PlayerPrefs.GetFloat(SOUND_SAVE_KEY);
+        }
+        else
+        {
+            AudioListener.volume = 1;
+        }
+    }
+
     private void LoadScore()
     {
         if (PlayerPrefs.HasKey(SCORE_SAVE_KEY))
@@ -102,7 +126,6 @@ public class AppController : MonoBehaviour
         if (PlayerPrefs.HasKey(OVERLAY_SAVE_KEY))
         {
             var overlay = JsonConvert.DeserializeObject<bool>(PlayerPrefs.GetString(OVERLAY_SAVE_KEY));
-            Debug.Log(overlay);
             _transparentWindow.SetOverlay(overlay);
         }
         else

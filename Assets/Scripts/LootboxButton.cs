@@ -13,6 +13,9 @@ public class LootboxButton : MonoBehaviour
     [SerializeField]
     private ParticleSystem _readyParticles;
 
+    [SerializeField]
+    private AudioSource _tapSound;
+
     private bool _ready;
     public event Action Tapped;
 
@@ -32,6 +35,7 @@ public class LootboxButton : MonoBehaviour
     {
         if (!_ready)
             return;
+        _tapSound.Play();
         _ready = false;
         _readyParticles.Stop();
         _renderer.DOFade(0, 0.5f);
