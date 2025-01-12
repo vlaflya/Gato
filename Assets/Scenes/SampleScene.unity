@@ -11342,7 +11342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Monitor icon switches to desctop mode
+  m_text: 'Monitor icon switches to desktop mode
 
     Tap to get points and more
     waifus!'
