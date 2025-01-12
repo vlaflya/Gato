@@ -131,7 +131,8 @@ GameObject:
   - component: {fileID: 108124114}
   - component: {fileID: 108124113}
   - component: {fileID: 108124112}
-  m_Layer: 0
+  - component: {fileID: 108124115}
+  m_Layer: 6
   m_Name: QuitIcon_0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,6 +267,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &108124115
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108124110}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &149322231
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 149322232}
   - component: {fileID: 149322233}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Monitor Icon_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +393,8 @@ GameObject:
   - component: {fileID: 160917651}
   - component: {fileID: 160917653}
   - component: {fileID: 160917652}
-  m_Layer: 0
+  - component: {fileID: 160917654}
+  m_Layer: 6
   m_Name: HotkeyBox_34x34_0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,6 +530,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.34, y: 0.34}
   m_EdgeRadius: 0
+--- !u!50 &160917654
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160917649}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &198579021
 GameObject:
   m_ObjectHideFlags: 0
@@ -11413,7 +11469,8 @@ GameObject:
   - component: {fileID: 890459555}
   - component: {fileID: 890459554}
   - component: {fileID: 890459556}
-  m_Layer: 0
+  - component: {fileID: 890459557}
+  m_Layer: 6
   m_Name: ScoreController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11433,6 +11490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1917971087}
+  _rigidbody: {fileID: 890459557}
 --- !u!4 &890459555
 Transform:
   m_ObjectHideFlags: 0
@@ -11470,7 +11528,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -11488,7 +11546,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.62074184, y: -0.004284054}
+  m_Offset: {x: 0.576565, y: 0.017804384}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -11498,8 +11556,35 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.5749645, y: 0.8200689}
+  m_Size: {x: 1.6633182, y: 0.48364496}
   m_EdgeRadius: 0
+--- !u!50 &890459557
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890459553}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &921936596
 GameObject:
   m_ObjectHideFlags: 0
@@ -11885,7 +11970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1069410111}
   - component: {fileID: 1069410112}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TitleBox_64x16_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12329,7 +12414,8 @@ GameObject:
   - component: {fileID: 1206670375}
   - component: {fileID: 1206670374}
   - component: {fileID: 1206670373}
-  m_Layer: 0
+  - component: {fileID: 1206670376}
+  m_Layer: 6
   m_Name: LootboxButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12345,7 +12431,7 @@ Transform:
   m_GameObject: {fileID: 1206670370}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.584, y: 0, z: 0}
+  m_LocalPosition: {x: -0.584, y: 0, z: 1}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12438,7 +12524,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 1
+  m_LayerOverridePriority: 10
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12482,6 +12568,33 @@ MonoBehaviour:
   _tapObject: {fileID: 1206670373}
   _renderer: {fileID: 1811876400}
   _readyParticles: {fileID: 1890696336}
+--- !u!50 &1206670376
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206670370}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1260848999
 GameObject:
   m_ObjectHideFlags: 0
@@ -12636,7 +12749,8 @@ GameObject:
   - component: {fileID: 1351274204}
   - component: {fileID: 1351274206}
   - component: {fileID: 1351274205}
-  m_Layer: 0
+  - component: {fileID: 1351274207}
+  m_Layer: 6
   m_Name: QuitIcon_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12769,8 +12883,35 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.21, y: 0.21}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
+--- !u!50 &1351274207
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351274202}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1408551240
 GameObject:
   m_ObjectHideFlags: 0
@@ -13221,7 +13362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1702031146}
   - component: {fileID: 1702031148}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Border (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13396,7 +13537,7 @@ GameObject:
   - component: {fileID: 1811876399}
   - component: {fileID: 1811876400}
   - component: {fileID: 1811876401}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Heart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13666,7 +13807,7 @@ GameObject:
   - component: {fileID: 1890696334}
   - component: {fileID: 1890696336}
   - component: {fileID: 1890696335}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18499,7 +18640,7 @@ GameObject:
   - component: {fileID: 1917971089}
   - component: {fileID: 1917971088}
   - component: {fileID: 1917971087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

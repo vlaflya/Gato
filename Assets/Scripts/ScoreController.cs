@@ -8,8 +8,13 @@ public class ScoreController : MonoBehaviour
     [SerializeField]
     private TMP_Text _text;
 
+    [SerializeField]
+    private Rigidbody2D _rigidbody;
+
     private Camera _camera;
     private Vector3 _dragOffset;
+    private Vector3 _targetPosition;
+    private Vector3 _targetScale;
     private bool _isDragged;
     public int TotalScore => _totalScore;
     private int _totalScore = 0;
@@ -54,7 +59,7 @@ public class ScoreController : MonoBehaviour
             }
             var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition) + _dragOffset;
             mousePosition.z = 0;
-            transform.position = mousePosition;
+            _targetPosition = mousePosition;
         }
         else
         {
@@ -63,9 +68,25 @@ public class ScoreController : MonoBehaviour
                 var newScale = transform.localScale + Vector3.one * 0.1f * Input.mouseScrollDelta.y;
                 if (newScale.y > MIN_SCALE)
                 {
-                    transform.localScale = newScale;
+                    _targetScale = newScale;
                 }
             }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isDragged)
+        {
+            _rigidbody.MovePosition(_targetPosition);
+        }
+        else
+        {
+            _rigidbody.linearVelocity = Vector2.zero;
+        }
+        if (_isHowered)
+        {
+            transform.localScale = _targetScale;
         }
     }
 

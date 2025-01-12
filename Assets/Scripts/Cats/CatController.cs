@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UniRx;
 
 public class CatController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CatController : MonoBehaviour
     private int _scoreValue;
     [SerializeField]
     private float _passiveDelay;
+    [SerializeField]
+    private Rigidbody2D _rigidbody;
 
     private Camera _camera;
     private Coroutine _passiveScoreGenerationCoroutine;
@@ -17,10 +20,13 @@ public class CatController : MonoBehaviour
     private bool _isDragged;
     private bool _isHowered;
     private Vector3 _dragOffset;
+    private Vector3 _targetPosition;
+    private Vector3 _targetScale;
     private string _id;
     private string _uniqId;
     private bool _canTap;
-    private const float MIN_SCALE = 0.5f;
+    private const float MIN_SCALE = 1f;
+    private const float MAX_SCALE = 20f;
     private const float TAP_TIME = 0.1f;
 
     public event Action<CatData> UpdatedData;
@@ -28,9 +34,16 @@ public class CatController : MonoBehaviour
 
     private void Start()
     {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        Observable.EveryUpdate().Where(_ => transform).Select(_ => transform.position).Subscribe(position =>
+        {
+            if (Input.mousePositionDelta.magnitude > 0)
+                OnChanged();
+        });
         _canTap = true;
         _camera = Camera.main;
         _passiveScoreGenerationCoroutine = StartCoroutine(GenerateScore());
+        _targetScale = transform.localScale;
     }
 
     public void Initialize(string id)
@@ -65,9 +78,7 @@ public class CatController : MonoBehaviour
             }
             var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition) + _dragOffset;
             mousePosition.z = 0;
-            transform.position = mousePosition;
-            if (Input.mousePositionDelta.magnitude > 0)
-                OnChanged();
+            _targetPosition = mousePosition;
         }
         else
         {
@@ -75,14 +86,30 @@ public class CatController : MonoBehaviour
             {
                 if (Input.mouseScrollDelta.y != 0)
                 {
-                    var newScale = transform.localScale + Vector3.one * 0.1f * Input.mouseScrollDelta.y;
-                    if (newScale.y > MIN_SCALE)
+                    var newScale = transform.localScale + Vector3.one * 0.3f * Input.mouseScrollDelta.y;
+                    if (newScale.y > MIN_SCALE && newScale.y < MAX_SCALE)
                     {
-                        transform.localScale = newScale;
+                        _targetScale = newScale;
                         OnChanged();
                     }
                 }
             }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isDragged)
+        {
+            _rigidbody.MovePosition(_targetPosition);
+        }
+        else
+        {
+            _rigidbody.linearVelocity = Vector2.zero;
+        }
+        if (_isHowered)
+        {
+            transform.localScale = _targetScale;
         }
     }
 

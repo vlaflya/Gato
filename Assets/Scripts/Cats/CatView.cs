@@ -20,6 +20,7 @@ public class CatView : MonoBehaviour
         _camera = Camera.main;
         _startScale = transform.localScale;
         _renderer.sprite = Resources.Load<Sprite>(SPRITE_PATH + id);
+        gameObject.AddComponent<PolygonCollider2D>();
     }
 
     public void Flip()

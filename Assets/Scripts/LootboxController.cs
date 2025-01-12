@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
 
 public class LootboxController : MonoBehaviour
@@ -39,9 +40,9 @@ public class LootboxController : MonoBehaviour
     private const float ITERATIONS_GIVEOUT_MULT = 4;
     private const float ITERATIONS_RARE_MULT = 3;
     private const float ITERATIONS_ULTRA_RARE_MULT = 2;
-    private const int SCORE_CHECKPOINT = 500;
-    private const float GIVEOUT_CHANCE = 30;
-    private const float RARE_CHANCE = 30;
+    private const int SCORE_CHECKPOINT = 1;
+    private const float GIVEOUT_CHANCE = 40;
+    private const float RARE_CHANCE = 40;
     private const float SRARE_CHANCE = 8;
     private const float SSRARE_CHANCE = 3;
 

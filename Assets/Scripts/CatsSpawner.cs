@@ -7,6 +7,23 @@ public class CatsSpawner : MonoBehaviour
 
     private const string PREFAB_PATH = "CatPrefab";
 
+    private void Start()
+    {
+        var camera = Camera.main;
+        var block = new GameObject();
+        var edge = block.AddComponent<EdgeCollider2D>();
+        var rigidBody = block.AddComponent<Rigidbody2D>();
+        rigidBody.bodyType = RigidbodyType2D.Static;
+        edge.SetPoints(new System.Collections.Generic.List<Vector2>
+        {
+            camera.ViewportToWorldPoint(Vector3.zero),
+            camera.ViewportToWorldPoint(Vector3.up),
+            camera.ViewportToWorldPoint(Vector3.one),
+            camera.ViewportToWorldPoint(Vector3.right),
+            camera.ViewportToWorldPoint(Vector3.zero),
+        });
+    }
+
     public void LoadCat(CatData data)
     {
         var cat = SpawnCat();
