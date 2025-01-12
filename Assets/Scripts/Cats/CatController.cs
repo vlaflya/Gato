@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 public class CatController : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class CatController : MonoBehaviour
     private string _id;
     private string _uniqId;
     private bool _canTap;
+    private bool _canMove;
     private const float MIN_SCALE = 1f;
     private const float MAX_SCALE = 20f;
     private const float TAP_TIME = 0.1f;
@@ -41,6 +43,10 @@ public class CatController : MonoBehaviour
         {
             if (Input.mousePositionDelta.magnitude > 0)
                 OnChanged();
+        });
+        DOVirtual.DelayedCall(4f, () =>
+        {
+            _canMove = true;
         });
         _canTap = true;
         _camera = Camera.main;
@@ -60,6 +66,7 @@ public class CatController : MonoBehaviour
 
     public void OnDataLoaded(CatData data)
     {
+        _canMove = true;
         _id = data.CatId;
         _uniqId = data.UniqId;
         _view.Initialize(data.CatId);
@@ -77,11 +84,6 @@ public class CatController : MonoBehaviour
             {
                 _isDragged = false;
                 return;
-            }
-            if (!_tapSound.isPlaying)
-            {
-                _tapSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                _tapSound.Play();
             }
             var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition) + _dragOffset;
             mousePosition.z = 0;
@@ -126,12 +128,18 @@ public class CatController : MonoBehaviour
         {
             _view.Bounce();
             _dragOffset = transform.position - _camera.ScreenToWorldPoint(Input.mousePosition);
-            _isDragged = true;
+            if (_canMove)
+                _isDragged = true;
             if (_canTap)
             {
                 _canTap = false;
                 _tapCoroutine = StartCoroutine(TapDelay());
                 GeneratedScore?.Invoke(_scoreValue);
+                if (!_tapSound.isPlaying)
+                {
+                    _tapSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                    _tapSound.Play();
+                }
             }
         }
         if (Input.GetMouseButtonDown(1))

@@ -34,7 +34,7 @@ public class LootboxController : MonoBehaviour
     private AudioSource _sucessSound;
 
     private bool _active;
-    private int _startScore;
+    private int _lastScore;
     private int _currentIteration;
     private Rarity _currentRarity = Rarity.Normal;
 
@@ -54,7 +54,7 @@ public class LootboxController : MonoBehaviour
 
     public void Initialize(int startScore)
     {
-        _startScore = startScore;
+        _lastScore = startScore;
         _currentIteration = 1;
         _boxTransform.transform.localScale = Vector3.zero;
     }
@@ -122,7 +122,7 @@ public class LootboxController : MonoBehaviour
     {
         if (_active)
             return;
-        if (score < SCORE_CHECKPOINT * _currentIteration + _startScore)
+        if (score < SCORE_CHECKPOINT * _currentIteration + _lastScore)
             return;
         float giveoutChance = UnityEngine.Random.Range(0f, 100f);
         if (giveoutChance + _currentIteration * ITERATIONS_GIVEOUT_MULT > GIVEOUT_CHANCE)
@@ -132,6 +132,7 @@ public class LootboxController : MonoBehaviour
                 _currentIteration = MAX_ITERATIONS;
             return;
         }
+        _lastScore = score;
         _currentIteration = 1;
         _active = true;
         ReadyToGiveCat?.Invoke();
