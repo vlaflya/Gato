@@ -40,7 +40,7 @@ public class LootboxController : MonoBehaviour
     private const float ITERATIONS_GIVEOUT_MULT = 4;
     private const float ITERATIONS_RARE_MULT = 3;
     private const float ITERATIONS_ULTRA_RARE_MULT = 2;
-    private const int SCORE_CHECKPOINT = 1;
+    private const int SCORE_CHECKPOINT = 500;
     private const float GIVEOUT_CHANCE = 40;
     private const float RARE_CHANCE = 40;
     private const float SRARE_CHANCE = 8;
