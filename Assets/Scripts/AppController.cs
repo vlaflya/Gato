@@ -111,6 +111,7 @@ public class AppController : MonoBehaviour
     private void GiveEventButtonClick()
     {
         _heartButton.Tapped -= GiveEventButtonClick;
+        _lootboxController.AddIterration();
         _lootboxController.Reset();
         _eventsController.StartClickRush();
     }
@@ -196,6 +197,7 @@ public class AppController : MonoBehaviour
             }
         }
         _data.Add(data);
+        _lootboxController.SetCatCount(_data.Count);
         SaveCats();
     }
 
@@ -238,6 +240,7 @@ public class AppController : MonoBehaviour
         {
             _data = new List<CatData>();
         }
+        _lootboxController.SetCatCount(_data.Count);
     }
 
     private void SaveCats()
