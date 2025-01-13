@@ -40,6 +40,7 @@ public class AppController : MonoBehaviour
 
     private bool _firstLaunch;
     private List<CatData> _data = new List<CatData>();
+    private List<CatController> _cats = new List<CatController>();
 
     private const string CATS_SAVE_KEY = "CatsData";
     private const string FIRST_LAUNCH_SAVE_KEY = "FirstLaunch";
@@ -113,7 +114,7 @@ public class AppController : MonoBehaviour
         _heartButton.Tapped -= GiveEventButtonClick;
         _lootboxController.AddIterration();
         _lootboxController.Reset();
-        _eventsController.StartClickRush();
+        _eventsController.StartEvent(_cats);
     }
 
     private void OnLootBoxOpened(string catId, Rarity rarity)
@@ -176,6 +177,7 @@ public class AppController : MonoBehaviour
 
     private void OnSpawnedCat(CatController catController)
     {
+        _cats.Add(catController);
         catController.GeneratedScore += AddScore;
         catController.UpdatedData += OnCatUpdated;
     }

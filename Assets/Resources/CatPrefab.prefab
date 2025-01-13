@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2584549960169902320
 Transform:
   m_ObjectHideFlags: 0
@@ -50,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -19723,6 +19723,7 @@ MonoBehaviour:
   _passiveDelay: 1
   _rigidbody: {fileID: 6647869434049850491}
   _tapSound: {fileID: 285214597373211761}
+  _goldParticles: {fileID: 3768309650924539692}
   _raritySettings:
   - Rarity: 0
     ScoreValue: 1

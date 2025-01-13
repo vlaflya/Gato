@@ -16,6 +16,8 @@ public class CatController : MonoBehaviour
     [SerializeField]
     private AudioSource _tapSound;
     [SerializeField]
+    private ParticleSystem _goldParticles;
+    [SerializeField]
     private List<RaritySettings> _raritySettings;
 
     private Rarity _rarity;
@@ -32,9 +34,13 @@ public class CatController : MonoBehaviour
     private string _uniqId;
     private bool _canTap;
     private bool _canMove;
+    private bool _isGolden;
+    private int _goldenTapsCount = 1;
     private const float MIN_SCALE = 1f;
     private const float MAX_SCALE = 20f;
     private const float TAP_TIME = 0.1f;
+    private const int GOLDEN_TIME_MULTIPLIER = 2;
+    private const int GOLDEN_TAPS = 20;
 
     public event Action<CatData> UpdatedData;
     public event Action<int> GeneratedScore;
@@ -81,6 +87,19 @@ public class CatController : MonoBehaviour
         transform.localScale = Vector3.one * data.Scale;
         if (data.Flipped)
             _view.Flip();
+    }
+
+    public void StartGoldRush()
+    {
+        _goldenTapsCount = GOLDEN_TAPS;
+        _goldParticles.Play();
+        _isGolden = true;
+    }
+
+    public void EndGoldRush()
+    {
+        _goldParticles.Stop();
+        _isGolden = false;
     }
 
     private RaritySettings GetCurrentSettings()
@@ -153,7 +172,14 @@ public class CatController : MonoBehaviour
             {
                 _canTap = false;
                 _tapCoroutine = StartCoroutine(TapDelay());
-                GeneratedScore?.Invoke(_currentSettings.ScoreValue);
+                if (_isGolden)
+                {
+                    _goldenTapsCount--;
+                    if (_goldenTapsCount <= 0)
+                        EndGoldRush();
+                }
+                var mult = _isGolden ? GOLDEN_TIME_MULTIPLIER : 1;
+                GeneratedScore?.Invoke(_currentSettings.ScoreValue * mult);
                 if (!_tapSound.isPlaying)
                 {
                     _tapSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);

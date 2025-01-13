@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class SpecialEventsController : MonoBehaviour
     [SerializeField]
     private ParticleSystem _particleSystem;
 
+    private List<CatController> _cats;
     private const float EVENT_LENGHT = 10;
 
     private void Start()
@@ -18,13 +20,23 @@ public class SpecialEventsController : MonoBehaviour
         shape.radius = camera.ViewportToWorldPoint(Vector3.right).x;
     }
 
-    public void StartClickRush()
+    public void StartEvent(List<CatController> cats)
+    {
+        _cats = cats;
+        StartClickRush();
+    }
+
+    private void StartClickRush()
     {
         _particleSystem.Play();
         StartTimer();
+        foreach (var cat in _cats)
+        {
+            cat.StartGoldRush();
+        }
     }
 
-    public void StartCakeRush()
+    private void StartCakeRush()
     {
         _particleSystem.Play();
         StartTimer();
@@ -35,6 +47,10 @@ public class SpecialEventsController : MonoBehaviour
         DOVirtual.DelayedCall(EVENT_LENGHT, () =>
         {
             _particleSystem.Stop();
+            foreach (var cat in _cats)
+            {
+                cat.EndGoldRush();
+            }
         });
     }
 }
