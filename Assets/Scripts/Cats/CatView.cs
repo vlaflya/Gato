@@ -43,6 +43,13 @@ public class CatView : MonoBehaviour
         _bounceParticles.Play();
     }
 
+    public void SmallBounce()
+    {
+        transform.localScale = _startScale;
+        _bounceTween?.Kill();
+        _bounceTween = transform.DOPunchScale(Vector3.one * 0.05f, 0.2f);
+    }
+
     public void Twitch()
     {
         var sequence = DOTween.Sequence();

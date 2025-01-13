@@ -87,7 +87,8 @@ public class CatController : MonoBehaviour
     {
         foreach (var settings in _raritySettings)
         {
-            if(settings.Rarity == _rarity){
+            if (settings.Rarity == _rarity)
+            {
                 return settings;
             }
         }
@@ -190,8 +191,9 @@ public class CatController : MonoBehaviour
 
     private IEnumerator GenerateScore()
     {
-        yield return new WaitForSecondsRealtime(_passiveDelay);
+        yield return new WaitForSecondsRealtime(_passiveDelay + UnityEngine.Random.Range(-0.1f, 0.2f));
         GeneratedScore?.Invoke(_currentSettings.ScoreValue);
+        // _view.SmallBounce();
         _passiveScoreGenerationCoroutine = StartCoroutine(GenerateScore());
     }
 

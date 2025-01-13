@@ -12,10 +12,13 @@ public class AppController : MonoBehaviour
     private TapObject _clearButton;
 
     [SerializeField]
-    private LootboxButton _lootboxButton;
+    private LootboxButton _heartButton;
 
     [SerializeField]
     private CatsSpawner _spawner;
+
+    [SerializeField]
+    private SpecialEventsController _eventsController;
 
     [SerializeField]
     private LootboxController _lootboxController;
@@ -31,6 +34,9 @@ public class AppController : MonoBehaviour
 
     [SerializeField]
     private TapObject _soundButton;
+
+    [SerializeField]
+    private GameObject _soundCross;
 
     private bool _firstLaunch;
     private List<CatData> _data = new List<CatData>();
@@ -52,8 +58,8 @@ public class AppController : MonoBehaviour
         _transparentWindow.Initialize();
         _transparentWindow.OvelayChanged += OnOverlayChanged;
         _lootboxController.GaveCat += OnLootBoxOpened;
-        _lootboxController.ReadyToGiveCat += _lootboxButton.SetActive;
-        _lootboxButton.Tapped += OnClickedLootboxButton;
+        _lootboxController.GiveLootbox += ReadyLootbox;
+        _lootboxController.GiveEvent += ReadyEvent;
         _spawner.SpawnedCat += OnSpawnedCat;
         LoadData();
         _soundButton.OnClick += ChangeSound;
@@ -69,7 +75,7 @@ public class AppController : MonoBehaviour
             DOVirtual.DelayedCall(0.5f, () =>
             {
                 _tutorialController.StartTutorial();
-                _lootboxButton.SetActive();
+                ReadyLootbox();
             });
         }
     }
@@ -82,11 +88,31 @@ public class AppController : MonoBehaviour
         }
     }
 
-    private void OnClickedLootboxButton()
+    private void ReadyLootbox()
     {
+        _heartButton.SetActive();
+        _heartButton.Tapped += GiveLootboxButtonClick;
+    }
+
+    private void ReadyEvent()
+    {
+        _heartButton.SetActive();
+        _heartButton.Tapped += GiveEventButtonClick;
+    }
+
+    private void GiveLootboxButtonClick()
+    {
+        _heartButton.Tapped -= GiveLootboxButtonClick;
         if (_firstLaunch)
             _tutorialController.ContinueTutorial();
         _lootboxController.GiveCat();
+    }
+
+    private void GiveEventButtonClick()
+    {
+        _heartButton.Tapped -= GiveEventButtonClick;
+        _lootboxController.Reset();
+        _eventsController.StartClickRush();
     }
 
     private void OnLootBoxOpened(string catId, Rarity rarity)
@@ -99,6 +125,7 @@ public class AppController : MonoBehaviour
     private void ChangeSound()
     {
         AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
+        _soundCross.SetActive(AudioListener.volume == 0);
         PlayerPrefs.SetFloat(SOUND_SAVE_KEY, AudioListener.volume);
     }
 
@@ -107,10 +134,12 @@ public class AppController : MonoBehaviour
         if (PlayerPrefs.HasKey(SOUND_SAVE_KEY))
         {
             AudioListener.volume = PlayerPrefs.GetFloat(SOUND_SAVE_KEY);
+            _soundCross.SetActive(AudioListener.volume == 0);
         }
         else
         {
             AudioListener.volume = 1;
+            _soundCross.SetActive(false);
         }
     }
 
@@ -121,10 +150,12 @@ public class AppController : MonoBehaviour
             var scoreData = JsonConvert.DeserializeObject<ScoreData>(PlayerPrefs.GetString(SCORE_SAVE_KEY));
             _scoreController.Initialize(scoreData);
             _lootboxController.Initialize(scoreData.Score);
+            _lootboxController.SetEmpty();
         }
         else
         {
             _lootboxController.Initialize(0);
+            _lootboxController.SetFull();
             AddScore(0);
         }
     }
@@ -171,6 +202,8 @@ public class AppController : MonoBehaviour
     private void AddScore(int value)
     {
         _scoreController.AddScore(value);
+        if (value == 0)
+            return;
         var scoreData = new ScoreData
         {
             Score = _scoreController.TotalScore,

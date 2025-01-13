@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using UniRx;
 using UnityEngine;
 
 public class LootboxController : MonoBehaviour
 {
     [SerializeField]
     private Transform _boxTransform;
+
+    [SerializeField]
+    private LootBoxProgressMeter _meter;
 
     [SerializeField]
     private SpriteRenderer _siluete;
@@ -40,16 +42,17 @@ public class LootboxController : MonoBehaviour
     private Rarity _currentRarity = Rarity.Normal;
 
     public event Action<string, Rarity> GaveCat;
-    public event Action ReadyToGiveCat;
+    public event Action GiveLootbox;
+    public event Action GiveEvent;
 
     private const string SILUETE_PATH = "waifusSiluets/";
     private const int MAX_ITERATIONS = 6;
-    private const float ITERATIONS_GIVEOUT_MULT = 2;
+    private const float ITERATIONS_GIVEOUT_MULT = 10;
     private const float ITERATIONS_RARE_MULT = 3;
     private const float ITERATIONS_ULTRA_RARE_MULT = 2;
     private const float UNLUCK_GIVEOUT_MULT = 0.2f;
-    private const int SCORE_CHECKPOINT = 500;
-    private const float GIVEOUT_CHANCE = 50;
+    private const int BASE_SCORE_CHECKPOINT = 250;
+    private const float GIVEOUT_CHANCE = 101;
     private const float RARE_CHANCE = 30;
     private const float SRARE_CHANCE = 5;
     private const float SSRARE_CHANCE = 2;
@@ -59,6 +62,22 @@ public class LootboxController : MonoBehaviour
         _lastScore = startScore;
         _currentIteration = 1;
         _boxTransform.transform.localScale = Vector3.zero;
+    }
+
+    public void SetFull()
+    {
+        _meter.SetFull();
+    }
+
+    public void SetEmpty()
+    {
+        _meter.Empty();
+    }
+
+    public void Reset()
+    {
+        _active = false;
+        _meter.Empty();
     }
 
     private string GetRandomCat(RaritySettings settings)
@@ -77,6 +96,7 @@ public class LootboxController : MonoBehaviour
 
     public void GiveCat()
     {
+        _meter.Empty();
         RaritySettings currentSettings = null;
         foreach (var settings in _raritySettings)
         {
@@ -124,13 +144,19 @@ public class LootboxController : MonoBehaviour
     {
         if (!test)
         {
+            var targetScore = BASE_SCORE_CHECKPOINT * _currentIteration;
+            _meter.Fill((float)(score - _lastScore) / targetScore);
             if (_active)
                 return;
-            if (score < SCORE_CHECKPOINT * _currentIteration + _lastScore)
+            if (score - _lastScore < targetScore)
+            {
                 return;
+            }
             float giveoutChance = UnityEngine.Random.Range(0f, 100f);
             if (giveoutChance + _currentIteration * ITERATIONS_GIVEOUT_MULT > GIVEOUT_CHANCE)
             {
+                GiveEvent?.Invoke();
+                _lastScore = score;
                 _currentIteration++;
                 if (_currentIteration > MAX_ITERATIONS)
                     _currentIteration = MAX_ITERATIONS;
@@ -140,7 +166,7 @@ public class LootboxController : MonoBehaviour
         _lastScore = score;
         _currentIteration = 1;
         _active = true;
-        ReadyToGiveCat?.Invoke();
+        GiveLootbox?.Invoke();
         float rarityChance = UnityEngine.Random.Range(0f, 100f);
         if (rarityChance < SSRARE_CHANCE + _currentIteration + _currentUnluck * UNLUCK_GIVEOUT_MULT)
         {
