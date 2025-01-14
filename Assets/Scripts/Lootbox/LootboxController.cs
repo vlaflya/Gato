@@ -27,6 +27,9 @@ public class LootboxController : MonoBehaviour
     private LootboxStars _stars;
 
     [SerializeField]
+    private Transform _nameBox;
+
+    [SerializeField]
     private ChancesTable _table;
 
     [SerializeField]
@@ -45,33 +48,25 @@ public class LootboxController : MonoBehaviour
     private int _lastScore;
     private int _catCount;
     private int _currentIteration;
-    private int _currentUnluck = 0;
-    private Rarity _currentRarity = Rarity.Normal;
+    // private int _currentUnluck = 0;
+    private Rarity _currentRarity = Rarity.ERare;
 
     public event Action<string, Rarity> GaveCat;
     public event Action GiveLootbox;
     public event Action GiveEvent;
 
-    private const string SILUETE_PATH = "waifusSiluets/";
-    private const int MAX_ITERATIONS = 13;
-    private const float ITERATIONS_GIVEOUT_MULT = 2;
-    private const float ITERATIONS_RARE_MULT = 3;
-    private const float ITERATIONS_SRARE_MULT = 0.8f;
-    private const float ITERATIONS_SSRARE_MULT = 0.05f;
-    private const float UNLUCK_GIVEOUT_MULT = 0.005f;
+    private const string SILUETE_PATH = "waifus/";
+    private const int MAX_ITERATIONS = 25;
+    // private const float UNLUCK_GIVEOUT_MULT = 0.005f;
     private const int BASE_SCORE_CHECKPOINT = 250;
     private const int SCORE_INCREMENT = 350;
-    private const float BASE_GIVEOUT_CHANCE = 95;
-    private const float CAT_GIVEOUT_CHANCE_SUBSTRACT = 8;
-    private const float MIN_GIVEOUT_CHANCE = 30;
-    private const float RARE_CHANCE = 20;
-    private const float SRARE_CHANCE = -0.5f;
-    private const float SSRARE_CHANCE = -0.15f;
+
 
     public void Initialize(int startScore)
     {
         _lastScore = startScore;
         _boxTransform.transform.localScale = Vector3.zero;
+        _nameBox.localScale = Vector3.up;
     }
 
     public void SetCatCount(int catCount)
@@ -130,6 +125,7 @@ public class LootboxController : MonoBehaviour
                 _siluete.gameObject.SetActive(false);
                 _backParticles.Stop();
                 GaveCat?.Invoke(name, _currentRarity);
+                _nameBox.DOScale(Vector3.one, 0.2f).SetEase(Ease.InOutQuad);
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     _stars.Show(currentSettings.Rarity);
@@ -145,6 +141,7 @@ public class LootboxController : MonoBehaviour
                     currentSettings.BackSprite.DOFade(0, 0.3f);
                     _active = false;
                     _boxTransform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutQuad);
+                    _nameBox.DOScale(Vector3.up, 0.2f).SetEase(Ease.InOutQuad);
                 });
             });
         });
@@ -166,7 +163,7 @@ public class LootboxController : MonoBehaviour
                 return;
             }
             float chance = UnityEngine.Random.Range(0f, 100f);
-            var giveoutChance = CalculateGiveoutChance();
+            var giveoutChance = ChancesHelper.CalculateGiveoutChance(_currentIteration, _catCount);
             if (chance > giveoutChance)
             {
                 GiveEvent?.Invoke();
@@ -180,25 +177,22 @@ public class LootboxController : MonoBehaviour
         _active = true;
         GiveLootbox?.Invoke();
         float rarityChance = UnityEngine.Random.Range(0f, 100f);
-        if (rarityChance < CalculateSSRareChance())
+        if (rarityChance < ChancesHelper.CalculateBChance(_currentIteration))
         {
-            _currentRarity = Rarity.SSRare;
-            _currentUnluck = 0;
+            _currentRarity = Rarity.BRare;
             return;
         }
-        if (rarityChance < CalculateSRareChance())
+        if (rarityChance < ChancesHelper.CalculateCChance(_currentIteration))
         {
-            _currentRarity = Rarity.SRare;
-            _currentUnluck = 0;
+            _currentRarity = Rarity.CRare;
             return;
         }
-        if (rarityChance < CalculateRareChance())
+        if (rarityChance < ChancesHelper.CalculateDChance(_currentIteration))
         {
-            _currentRarity = Rarity.Rare;
+            _currentRarity = Rarity.DRare;
             return;
         }
-        _currentRarity = Rarity.Normal;
-        _currentUnluck++;
+        _currentRarity = Rarity.ERare;
     }
 
     private string GetRandomCat(RaritySettings settings)
@@ -217,51 +211,28 @@ public class LootboxController : MonoBehaviour
 
     private void UpdateChancesTable()
     {
-        _table.UpdateChances(CalculateGiveoutChance(), new List<RarityChance>
+        _table.UpdateChances(ChancesHelper.CalculateGiveoutChance(_currentIteration, _catCount), new List<RarityChance>
         {
             new RarityChance{
-                Rarity = Rarity.Normal,
-                Chance = CalculateNormalChance()
+                Rarity = Rarity.ERare,
+                Chance = ChancesHelper.CalculateEChance(_currentIteration)
             },
             new RarityChance{
-                Rarity = Rarity.Rare,
-                Chance = CalculateRareChance() - MathF.Max(0,CalculateSRareChance()) - MathF.Max(0,CalculateSSRareChance())
+                Rarity = Rarity.DRare,
+                Chance = ChancesHelper.CalculateDChance(_currentIteration) - ChancesHelper.CalculateCChance(_currentIteration) - ChancesHelper. CalculateBChance(_currentIteration)
             },
             new RarityChance{
-                Rarity = Rarity.SRare,
-                Chance = MathF.Max(0,CalculateSRareChance()) - MathF.Max(0,CalculateSSRareChance())
+                Rarity = Rarity.CRare,
+                Chance = ChancesHelper.CalculateCChance(_currentIteration) - ChancesHelper.CalculateBChance(_currentIteration)
             },
             new RarityChance{
-                Rarity = Rarity.SSRare,
-                Chance = CalculateSSRareChance()
+                Rarity = Rarity.BRare,
+                Chance = ChancesHelper.CalculateBChance(_currentIteration)
             },
         });
     }
 
-    private float CalculateGiveoutChance()
-    {
-        return Mathf.Max(MIN_GIVEOUT_CHANCE, BASE_GIVEOUT_CHANCE - CAT_GIVEOUT_CHANCE_SUBSTRACT * _catCount) + _currentIteration * ITERATIONS_GIVEOUT_MULT;
-    }
 
-    private float CalculateRareChance()
-    {
-        return RARE_CHANCE + _currentIteration * ITERATIONS_RARE_MULT;
-    }
-
-    private float CalculateSRareChance()
-    {
-        return SRARE_CHANCE + _currentIteration * ITERATIONS_SRARE_MULT + _currentUnluck * UNLUCK_GIVEOUT_MULT;
-    }
-
-    private float CalculateSSRareChance()
-    {
-        return SSRARE_CHANCE + _currentIteration * ITERATIONS_SSRARE_MULT;
-    }
-
-    private float CalculateNormalChance()
-    {
-        return 100 - CalculateRareChance() - MathF.Max(0, CalculateSRareChance()) - MathF.Max(0, CalculateSSRareChance());
-    }
 }
 
 [Serializable]
@@ -275,8 +246,10 @@ public class RaritySettings
 
 public enum Rarity
 {
-    Normal,
-    Rare,
-    SRare,
-    SSRare
+    ERare,
+    DRare,
+    CRare,
+    BRare,
+    ARare,
+    SRare
 }

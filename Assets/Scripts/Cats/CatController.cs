@@ -59,7 +59,7 @@ public class CatController : MonoBehaviour
         });
         _canTap = true;
         _camera = Camera.main;
-        _passiveScoreGenerationCoroutine = StartCoroutine(GenerateScore());
+        // _passiveScoreGenerationCoroutine = StartCoroutine(GenerateScore());
         _targetScale = transform.localScale;
     }
 
