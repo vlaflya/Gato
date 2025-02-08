@@ -14,10 +14,222 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CatsData:
   - Rarity: 0
-    Count: 47
+    CatLootboxInfos:
+    - Id: 1-0
+      Name: Hisako
+    - Id: 1-1
+      Name: Asami
+    - Id: 1-2
+      Name: Kotone
+    - Id: 1-3
+      Name: Akane
+    - Id: 1-4
+      Name: Yuki
+    - Id: 1-5
+      Name: Rin
+    - Id: 1-6
+      Name: Kaori
+    - Id: 1-7
+      Name: Misaki
+    - Id: 1-8
+      Name: Nozomi
+    - Id: 1-9
+      Name: Reiko
+    - Id: 1-10
+      Name: Yumi
+    - Id: 1-11
+      Name: Kiko
+    - Id: 1-12
+      Name: Emi
+    - Id: 1-13
+      Name: Hana
+    - Id: 1-14
+      Name: Ayumi
+    - Id: 1-15
+      Name: Izumi
+    - Id: 1-16
+      Name: Momoko
+    - Id: 1-17
+      Name: Chika
+    - Id: 1-18
+      Name: Aiko
+    - Id: 1-19
+      Name: Miki
+    - Id: 1-20
+      Name: Yoko
+    - Id: 1-21
+      Name: Asa
+    - Id: 1-22
+      Name: Kana
+    - Id: 1-23
+      Name: Miho
+    - Id: 1-24
+      Name: Suki
+    - Id: 1-25
+      Name: Tami
+    - Id: 1-26
+      Name: Asami
+    - Id: 1-27
+      Name: Michi
+    - Id: 1-28
+      Name: Shizuko
+    - Id: 1-29
+      Name: Kazue
+    - Id: 1-30
+      Name: Gina
+    - Id: 1-31
+      Name: Katsumi
+    - Id: 1-32
+      Name: Gina
+    - Id: 1-33
+      Name: Masako
+    - Id: 1-34
+      Name: Moriko
+    - Id: 1-35
+      Name: Kimi
+    - Id: 1-36
+      Name: Etsuko
+    - Id: 1-37
+      Name: Kiku
+    - Id: 1-38
+      Name: Kameko
+    - Id: 1-39
+      Name: Emi
+    - Id: 1-40
+      Name: Reiko
+    - Id: 1-41
+      Name: Shiori
+    - Id: 1-42
+      Name: Aki
+    - Id: 1-43
+      Name: Midori
+    - Id: 1-44
+      Name: Kohaku
+    - Id: 1-45
+      Name: Hotaru
+    - Id: 1-46
+      Name: Kumiko
+    - Id: 1-47
+      Name: Ayaka
   - Rarity: 1
-    Count: 30
+    CatLootboxInfos:
+    - Id: 2-0
+      Name: Atsuko
+    - Id: 2-1
+      Name: Mizuki
+    - Id: 2-2
+      Name: Kasumi
+    - Id: 2-3
+      Name: Tomoko
+    - Id: 2-4
+      Name: Yuriko
+    - Id: 2-5
+      Name: Chiasa
+    - Id: 2-6
+      Name: Misaki
+    - Id: 2-7
+      Name: Kayo
+    - Id: 2-8
+      Name: Kyo
+    - Id: 2-9
+      Name: Setsuko
+    - Id: 2-10
+      Name: Kaede
+    - Id: 2-11
+      Name: Minori
+    - Id: 2-12
+      Name: Etsuko
+    - Id: 2-13
+      Name: Naoki
+    - Id: 2-14
+      Name: Michi
+    - Id: 2-15
+      Name: Azumi
+    - Id: 2-16
+      Name: Kazumi
+    - Id: 2-17
+      Name: Mieko
+    - Id: 2-18
+      Name: Ayumi
+    - Id: 2-19
+      Name: Hiromi
+    - Id: 2-20
+      Name: Kaede
+    - Id: 2-21
+      Name: Kyou
+    - Id: 2-22
+      Name: Yoshi
+    - Id: 2-23
+      Name: Ayako
+    - Id: 2-24
+      Name: Kaoru
+    - Id: 2-25
+      Name: Masumi
+    - Id: 2-26
+      Name: Akira
+    - Id: 2-27
+      Name: Ko
   - Rarity: 2
-    Count: 19
+    CatLootboxInfos:
+    - Id: 3-0
+      Name: Kyoko
+    - Id: 3-1
+      Name: Mi
+    - Id: 3-2
+      Name: Hana
+    - Id: 3-3
+      Name: Kame
+    - Id: 3-4
+      Name: Aimi
+    - Id: 3-5
+      Name: Mai
+    - Id: 3-6
+      Name: Fuji
+    - Id: 3-7
+      Name: Akemi
+    - Id: 3-8
+      Name: Shizuka
+    - Id: 3-9
+      Name: Kazumi
+    - Id: 3-10
+      Name: Hanako
+    - Id: 3-11
+      Name: Tomoko
+    - Id: 3-12
+      Name: Ayame
+    - Id: 3-13
+      Name: Kame
   - Rarity: 3
-    Count: 3
+    CatLootboxInfos:
+    - Id: 4-0
+      Name: Sayuri
+    - Id: 4-1
+      Name: Setsuko
+    - Id: 4-2
+      Name: Masumi
+    - Id: 4-3
+      Name: Eri
+    - Id: 4-4
+      Name: Kaori
+    - Id: 4-5
+      Name: Shizuka
+    - Id: 4-6
+      Name: Noriko
+  - Rarity: 4
+    CatLootboxInfos:
+    - Id: 5-0
+      Name: Aya
+    - Id: 5-1
+      Name: Hoshi
+    - Id: 5-2
+      Name: Asami
+    - Id: 5-3
+      Name: Kiyoko
+    - Id: 5-4
+      Name: Nobuko
+  - Rarity: 5
+    CatLootboxInfos:
+    - Id: 6-0
+      Name: Sakura
+    - Id: 6-1
+      Name: Kuro

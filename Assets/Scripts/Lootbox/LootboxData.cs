@@ -10,6 +10,13 @@ public class LootboxData : ScriptableObject
     public class LootboxCatsData
     {
         public Rarity Rarity;
-        public int Count;
+        public List<CatLootboxInfo> CatLootboxInfos;
+    }
+
+    [Serializable]
+    public class CatLootboxInfo
+    {
+        public string Id;
+        public string Name;
     }
 }

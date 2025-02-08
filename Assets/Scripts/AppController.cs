@@ -24,7 +24,16 @@ public class AppController : MonoBehaviour
     private LootboxController _lootboxController;
 
     [SerializeField]
+    private IterationStars _iterationStars;
+
+    [SerializeField]
     private ScoreController _scoreController;
+
+    [SerializeField]
+    private ShopController _shopController;
+
+    [SerializeField]
+    private ChancesTable _chancesTable;
 
     [SerializeField]
     private TransparentWindow _transparentWindow;
@@ -39,14 +48,21 @@ public class AppController : MonoBehaviour
     private GameObject _soundCross;
 
     private bool _firstLaunch;
-    private List<CatData> _data = new List<CatData>();
+    private IWindow _currentWindow;
+    private int _currentIteration = 1;
+    private const int MAX_ITERATIONS = 25;
+    private List<CatData> _catData = new List<CatData>();
     private List<CatController> _cats = new List<CatController>();
+    private List<ItemData> _itemData = new List<ItemData>();
+    private List<IItem> _items = new List<IItem>();
 
     private const string CATS_SAVE_KEY = "CatsData";
+    private const string MONEY_SAVE_KEY = "Money";
     private const string FIRST_LAUNCH_SAVE_KEY = "FirstLaunch";
     private const string OVERLAY_SAVE_KEY = "Overlay";
     private const string SOUND_SAVE_KEY = "Sound";
     private const string SCORE_SAVE_KEY = "Score";
+    private const string ITEM_SAVE_KEY = "ItemData";
 
     private void Awake()
     {
@@ -62,10 +78,15 @@ public class AppController : MonoBehaviour
         _lootboxController.GiveLootbox += ReadyLootbox;
         _lootboxController.GiveEvent += ReadyEvent;
         _spawner.SpawnedCat += OnSpawnedCat;
-        LoadData();
         _soundButton.OnClick += ChangeSound;
+        _shopController.MoneyUpdated += SaveMoney;
+        _shopController.ItemSpawned += OnItemSpawned;
+        LoadCatData();
+        LoadMoney();
         LoadSound();
-        foreach (var catInfo in _data)
+        LoadItems();
+        InitializeWindows();
+        foreach (var catInfo in _catData)
         {
             _spawner.LoadCat(catInfo);
         }
@@ -81,11 +102,35 @@ public class AppController : MonoBehaviour
         }
     }
 
+    private void InitializeWindows()
+    {
+        _lootboxController.RequestOpen += ChangeWindow;
+        _shopController.RequestOpen += ChangeWindow;
+        _chancesTable.RequestOpen += ChangeWindow;
+    }
+
+    private void ChangeWindow(IWindow window)
+    {
+        if (_currentWindow == null)
+        {
+            _currentWindow = window;
+            window.Open();
+        }
+        else
+        {
+            if (_currentWindow.Close())
+            {
+                _currentWindow = window;
+                window.Open();
+            }
+        }
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _lootboxController.CalculateGiveout(_scoreController.TotalScore, true);
+            _lootboxController.CalculateGiveout(_scoreController.TotalScore, _currentIteration, true);
         }
     }
 
@@ -111,14 +156,20 @@ public class AppController : MonoBehaviour
 
     private void GiveEventButtonClick()
     {
+        _currentIteration++;
+        if (_currentIteration > MAX_ITERATIONS)
+            _currentIteration = MAX_ITERATIONS;
+        _iterationStars.SetIteration(_currentIteration - 1);
         _heartButton.Tapped -= GiveEventButtonClick;
-        _lootboxController.AddIterration();
-        _lootboxController.Reset();
-        _eventsController.StartEvent(_cats);
+        _lootboxController.UpdateChancesTable(_currentIteration);
+        _lootboxController.SetEmpty();
+        _eventsController.StartRandomEvent(_cats);
     }
 
     private void OnLootBoxOpened(string catId, Rarity rarity)
     {
+        _currentIteration = 1;
+        _iterationStars.Clear();
         if (_firstLaunch)
             _tutorialController.ContinueTutorial();
         _spawner.CreateNewCat(catId, rarity);
@@ -162,6 +213,19 @@ public class AppController : MonoBehaviour
         }
     }
 
+    private void LoadMoney()
+    {
+        if (PlayerPrefs.HasKey(MONEY_SAVE_KEY))
+        {
+            var money = PlayerPrefs.GetInt(MONEY_SAVE_KEY);
+            _shopController.Initialize(money);
+        }
+        else
+        {
+            _shopController.Initialize(0);
+        }
+    }
+
     private void LoadOverlay()
     {
         if (PlayerPrefs.HasKey(OVERLAY_SAVE_KEY))
@@ -184,30 +248,64 @@ public class AppController : MonoBehaviour
 
     private void OnCatUpdated(CatData data)
     {
-        for (int i = 0; i < _data.Count; i++)
+        for (int i = 0; i < _catData.Count; i++)
         {
-            if (data.UniqId.Equals(_data[i].UniqId))
+            if (data.UniqId.Equals(_catData[i].UniqId))
             {
                 if (_firstLaunch)
                 {
                     _firstLaunch = false;
                     _tutorialController.ContinueTutorial();
                 }
-                _data[i] = data;
+                _catData[i] = data;
                 SaveCats();
                 return;
             }
         }
-        _data.Add(data);
-        _lootboxController.SetCatCount(_data.Count);
+        _catData.Add(data);
+        _lootboxController.SetCatCount(_catData.Count, _currentIteration);
         SaveCats();
+    }
+
+    private void OnItemSpawned(IItem item)
+    {
+        _items.Add(item);
+        item.DataChanged += OnItemUpdated;
+    }
+
+    private void OnItemUpdated(ItemData data)
+    {
+        if (data.ItemType == ItemType.Timed)
+            return;
+        for (int i = 0; i < _itemData.Count; i++)
+        {
+            if (data.UniqId.Equals(_itemData[i].UniqId))
+            {
+                _itemData[i] = data;
+                SaveItems();
+                return;
+            }
+        }
+        _itemData.Add(data);
+        SaveItems();
+    }
+
+    private void LoadItems()
+    {
+        if (PlayerPrefs.HasKey(ITEM_SAVE_KEY))
+        {
+            _itemData = JsonConvert.DeserializeObject<List<ItemData>>(PlayerPrefs.GetString(ITEM_SAVE_KEY));
+            _shopController.SpawnItemsFromSave(_itemData);
+        }
+        else
+        {
+            _itemData = new List<ItemData>();
+        }
     }
 
     private void AddScore(int value)
     {
         _scoreController.AddScore(value);
-        if (value == 0)
-            return;
         var scoreData = new ScoreData
         {
             Score = _scoreController.TotalScore,
@@ -215,7 +313,8 @@ public class AppController : MonoBehaviour
             Y = _scoreController.transform.position.y,
             Scale = _scoreController.transform.localScale.y
         };
-        _lootboxController.CalculateGiveout(_scoreController.TotalScore);
+        _shopController.AddScore(1);
+        _lootboxController.CalculateGiveout(_scoreController.TotalScore, _currentIteration);
         PlayerPrefs.SetString(SCORE_SAVE_KEY, JsonConvert.SerializeObject(scoreData));
     }
 
@@ -225,7 +324,7 @@ public class AppController : MonoBehaviour
         Debug.Log(overlay);
     }
 
-    private void LoadData()
+    private void LoadCatData()
     {
         if (PlayerPrefs.HasKey(FIRST_LAUNCH_SAVE_KEY))
         {
@@ -235,20 +334,31 @@ public class AppController : MonoBehaviour
         {
             _firstLaunch = true;
         }
-        _data = new List<CatData>();
+        _catData = new List<CatData>();
         var save = PlayerPrefs.GetString(CATS_SAVE_KEY);
-        _data = JsonConvert.DeserializeObject<List<CatData>>(save);
-        if (_data == null || _data.Count == 0)
+        _catData = JsonConvert.DeserializeObject<List<CatData>>(save);
+        if (_catData == null || _catData.Count == 0)
         {
-            _data = new List<CatData>();
+            _catData = new List<CatData>();
         }
-        _lootboxController.SetCatCount(_data.Count);
+        _lootboxController.SetCatCount(_catData.Count, _currentIteration);
     }
 
     private void SaveCats()
     {
         PlayerPrefs.SetString(FIRST_LAUNCH_SAVE_KEY, "true");
-        var json = JsonConvert.SerializeObject(_data);
+        var json = JsonConvert.SerializeObject(_catData);
         PlayerPrefs.SetString(CATS_SAVE_KEY, json);
+    }
+
+    private void SaveItems()
+    {
+        var json = JsonConvert.SerializeObject(_itemData);
+        PlayerPrefs.SetString(ITEM_SAVE_KEY, json);
+    }
+
+    private void SaveMoney(int money)
+    {
+        PlayerPrefs.SetInt(MONEY_SAVE_KEY, money);
     }
 }

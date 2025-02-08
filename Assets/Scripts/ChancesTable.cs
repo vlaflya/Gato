@@ -4,39 +4,39 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class ChancesTable : MonoBehaviour
+public class ChancesTable : MonoBehaviour, IWindow
 {
     [SerializeField]
     private TapObject _openButton;
     [SerializeField]
-    private TMP_Text _givoutField;
-    [SerializeField]
     private List<RarityText> _texts;
 
+    private Tween _stateTween;
     private bool _active;
     private const int MAX_SIZE = 2;
 
+    public event Action<IWindow> RequestOpen;
+
     private void Start()
     {
+        transform.localScale = Vector3.zero;
         _openButton.OnClick += ChangeState;
     }
 
     private void ChangeState()
     {
-        _active = !_active;
         if (_active)
         {
-            transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutQuad);
+            Close();
         }
         else
         {
-            transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutQuad);
+            RequestOpen?.Invoke(this);
         }
     }
 
-    public void UpdateChances(float givoutChance, List<RarityChance> rarityChances)
+    public void UpdateChances(List<RarityChance> rarityChances)
     {
-        _givoutField.text = $"Waifu {givoutChance}%";
         foreach (var rarityChance in rarityChances)
         {
             foreach (var text in _texts)
@@ -50,6 +50,21 @@ public class ChancesTable : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Open()
+    {
+        _active = true;
+        _stateTween = transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutQuad);
+    }
+
+    public bool Close()
+    {
+        if (!_active)
+            return true;
+        _active = false;
+        _stateTween = transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutQuad);
+        return true;
     }
 
     [Serializable]

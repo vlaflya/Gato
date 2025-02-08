@@ -50,7 +50,7 @@ public class CatController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         Observable.EveryUpdate().Where(_ => transform).Select(_ => transform.position).Subscribe(position =>
         {
-            if (Input.mousePositionDelta.magnitude > 0)
+            if (Input.mousePositionDelta.magnitude > 0 && _isDragged)
                 OnChanged();
         });
         DOVirtual.DelayedCall(4f, () =>
@@ -100,6 +100,20 @@ public class CatController : MonoBehaviour
     {
         _goldParticles.Stop();
         _isGolden = false;
+    }
+
+    public void Tap()
+    {
+        _canTap = false;
+        _tapCoroutine = StartCoroutine(TapDelay());
+        if (_isGolden)
+        {
+            _goldenTapsCount--;
+            if (_goldenTapsCount <= 0)
+                EndGoldRush();
+        }
+        var mult = _isGolden ? GOLDEN_TIME_MULTIPLIER : 1;
+        GeneratedScore?.Invoke(_currentSettings.ScoreValue * mult);
     }
 
     private RaritySettings GetCurrentSettings()
@@ -170,16 +184,7 @@ public class CatController : MonoBehaviour
                 _isDragged = true;
             if (_canTap)
             {
-                _canTap = false;
-                _tapCoroutine = StartCoroutine(TapDelay());
-                if (_isGolden)
-                {
-                    _goldenTapsCount--;
-                    if (_goldenTapsCount <= 0)
-                        EndGoldRush();
-                }
-                var mult = _isGolden ? GOLDEN_TIME_MULTIPLIER : 1;
-                GeneratedScore?.Invoke(_currentSettings.ScoreValue * mult);
+                Tap();
                 if (!_tapSound.isPlaying)
                 {
                     _tapSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);

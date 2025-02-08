@@ -7,7 +7,7 @@ public class CatView : MonoBehaviour
     private SpriteRenderer _renderer;
 
     [SerializeField]
-    private GameObject _colliderObject;
+    private SpriteRenderer _colliderObject;
 
     public bool Flipped => _flipped;
     private ParticleSystem _bounceParticles;
@@ -22,8 +22,11 @@ public class CatView : MonoBehaviour
         _camera = Camera.main;
         _bounceParticles = particles;
         _startScale = transform.localScale;
-        _renderer.sprite = Resources.Load<Sprite>(SPRITE_PATH + id);
-        _colliderObject.AddComponent<PolygonCollider2D>();
+        var sprite = Resources.Load<Sprite>(SPRITE_PATH + id);
+        _renderer.sprite = sprite;
+        _colliderObject.sprite = sprite;
+        _colliderObject.gameObject.AddComponent<PolygonCollider2D>();
+        _colliderObject.sprite = null;
     }
 
     public void Flip()
