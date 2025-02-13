@@ -25,7 +25,7 @@ public class DraggableObject : MonoBehaviour
                 return;
             }
             var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition) + _dragOffset;
-            mousePosition.z = 0;
+            mousePosition.z = -1;
             _targetPosition = mousePosition;
         }
     }

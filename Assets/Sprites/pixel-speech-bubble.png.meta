@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 59c5b9836a6bcf3438c6000111ce636a
+guid: c483881a079409445a16dfff06465e5a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6698460488306171277
-    second: CatSiluete_0
+      213: -6562069172293716633
+    second: pixel-speech-bubble_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CatSiluete_0
+      name: pixel-speech-bubble_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 26
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        x: 17
+        y: 26
+        width: 488
+        height: 146
+      alignment: 9
+      pivot: {x: 0.3104631, y: 0.04436446}
+      border: {x: 19, y: 64, z: 19, w: 19}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d8d9a7bf256b5fc50800000000000000
-      internalID: 6698460488306171277
+      spriteID: 76534e9ead8dee4a0800000000000000
+      internalID: -6562069172293716633
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5a8a89db76815cc4aa6a18f8f665429a
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pixel-speech-bubble_0: -6562069172293716633
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

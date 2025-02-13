@@ -33,6 +33,9 @@ public class AppController : MonoBehaviour
     private ShopController _shopController;
 
     [SerializeField]
+    private CollectionController _collection;
+
+    [SerializeField]
     private ChancesTable _chancesTable;
 
     [SerializeField]
@@ -104,6 +107,7 @@ public class AppController : MonoBehaviour
 
     private void InitializeWindows()
     {
+        _collection.RequestOpen += ChangeWindow;
         _lootboxController.RequestOpen += ChangeWindow;
         _shopController.RequestOpen += ChangeWindow;
         _chancesTable.RequestOpen += ChangeWindow;
@@ -264,6 +268,7 @@ public class AppController : MonoBehaviour
         }
         _catData.Add(data);
         _lootboxController.SetCatCount(_catData.Count, _currentIteration);
+        _collection.SetCats(_catData);
         SaveCats();
     }
 
@@ -342,6 +347,7 @@ public class AppController : MonoBehaviour
             _catData = new List<CatData>();
         }
         _lootboxController.SetCatCount(_catData.Count, _currentIteration);
+        _collection.SetCats(_catData);
     }
 
     private void SaveCats()

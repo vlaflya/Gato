@@ -16,6 +16,8 @@ public class TransparentWindow : MonoBehaviour
     private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
     [SerializeField]
     private TapObject _tapObject;
+    [SerializeField]
+    private GameObject _back;
 
     private struct MARGINS
     {
@@ -82,10 +84,12 @@ public class TransparentWindow : MonoBehaviour
 #if !UNITY_EDITOR
         if (_isOverlay)
         {
+            _back.SetActive(false);
             SetWindowPos(_hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
         }
         else
         {
+            _back.SetActive(true);
             SetWindowPos(_hWnd, HWND_BOTTOM, 0, 0, 0, 0, 0);
         }
 #endif

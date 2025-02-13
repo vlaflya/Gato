@@ -10,6 +10,8 @@ public class ShopController : MonoBehaviour, IWindow
     [SerializeField]
     private TapObject _openButton;
     [SerializeField]
+    private TapObject _closeButton;
+    [SerializeField]
     private TMP_Text _moneyField;
     [SerializeField]
     private ParticleSystem _moneyParticles;
@@ -37,6 +39,7 @@ public class ShopController : MonoBehaviour, IWindow
         transform.localScale = Vector3.zero;
         _moneyField.text = _money.ToString() + "<sprite=0>";
         _openButton.OnClick += ChangeState;
+        _closeButton.OnClick += () => Close();
         _detailsScreen.BuyItem += BuyItem;
         foreach (var button in _detailsButtons)
         {

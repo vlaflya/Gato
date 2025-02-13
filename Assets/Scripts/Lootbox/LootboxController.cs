@@ -34,6 +34,9 @@ public class LootboxController : MonoBehaviour, IWindow
     private ChancesTable _table;
 
     [SerializeField]
+    private SpriteRenderer _rarityBack;
+
+    [SerializeField]
     private List<RaritySettings> _raritySettings;
 
     [SerializeField]
@@ -137,11 +140,12 @@ public class LootboxController : MonoBehaviour, IWindow
                     _stars.Hide();
                 });
                 currentSettings.Particles.Play();
-                currentSettings.BackSprite.DOFade(1, 0.8f);
+                _rarityBack.color = currentSettings.BackSpriteColor;
+                _rarityBack.DOFade(1, 0.8f);
                 DOVirtual.DelayedCall(5.5f, () =>
                 {
                     currentSettings.Stamp.transform.localScale = Vector3.zero;
-                    currentSettings.BackSprite.DOFade(0, 0.3f);
+                    _rarityBack.DOFade(0, 0.3f);
                     _opening = false;
                     _active = false;
                     _boxTransform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutQuad);
@@ -265,7 +269,7 @@ public class LootboxController : MonoBehaviour, IWindow
 public class RaritySettings
 {
     public Rarity Rarity;
-    public SpriteRenderer BackSprite;
+    public Color BackSpriteColor;
     public TMP_Text Stamp;
     public ParticleSystem Particles;
 }

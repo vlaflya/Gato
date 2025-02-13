@@ -9,6 +9,8 @@ public class ChancesTable : MonoBehaviour, IWindow
     [SerializeField]
     private TapObject _openButton;
     [SerializeField]
+    private TapObject _closeButton;
+    [SerializeField]
     private List<RarityText> _texts;
 
     private Tween _stateTween;
@@ -21,6 +23,7 @@ public class ChancesTable : MonoBehaviour, IWindow
     {
         transform.localScale = Vector3.zero;
         _openButton.OnClick += ChangeState;
+        _closeButton.OnClick += () => Close();
     }
 
     private void ChangeState()
@@ -46,7 +49,7 @@ public class ChancesTable : MonoBehaviour, IWindow
                     var chance = rarityChance.Chance;
                     if (chance < 0)
                         chance = 0;
-                    text.TextField.text = $"{text.Name} {Math.Round(chance, MAX_SIZE)}%";
+                    text.TextField.text = $"{Math.Round(chance, MAX_SIZE)}%";
                 }
             }
         }
@@ -71,7 +74,6 @@ public class ChancesTable : MonoBehaviour, IWindow
     public class RarityText
     {
         public Rarity Rarity;
-        public string Name;
         public TMP_Text TextField;
     }
 }
