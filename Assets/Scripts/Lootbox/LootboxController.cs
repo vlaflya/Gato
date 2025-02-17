@@ -63,12 +63,16 @@ public class LootboxController : MonoBehaviour, IWindow
     private const int BASE_SCORE_CHECKPOINT = 250;
     private const int SCORE_INCREMENT = 350;
 
+    void Start()
+    {
+        _boxTransform.transform.localScale = Vector3.zero;
+        _nameBox.localScale = Vector3.up;
+    }
+
 
     public void Initialize(int startScore)
     {
         _lastScore = startScore;
-        _boxTransform.transform.localScale = Vector3.zero;
-        _nameBox.localScale = Vector3.up;
     }
 
     public void SetCatCount(int catCount, int iterations)
@@ -203,17 +207,11 @@ public class LootboxController : MonoBehaviour, IWindow
 
     private string GetRandomCat()
     {
-        foreach (var catData in _data.CatsData)
-        {
-            if (catData.Rarity == _currentRarity)
-            {
-                var r = UnityEngine.Random.Range(0, catData.CatLootboxInfos.Count);
-                string id = catData.CatLootboxInfos[r].Id;
-                _nameField.text = catData.CatLootboxInfos[r].Name;
-                return id;
-            }
-        }
-        return null;
+        var cats = _data.RarityData[_currentRarity];
+        var r = UnityEngine.Random.Range(0, cats.Count);
+        string id = cats[r].Id;
+        _nameField.text = cats[r].Name;
+        return id;
     }
 
     public void UpdateChancesTable(int currentIteration)

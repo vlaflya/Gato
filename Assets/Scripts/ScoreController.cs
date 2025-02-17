@@ -24,6 +24,11 @@ public class ScoreController : MonoBehaviour
     private const int MAX_SCORE = 999999999;
     private const float MIN_SCALE = 0.5f;
 
+    public void InitializeEmpty()
+    {
+        AddScore(0);
+    }
+
     public void Initialize(ScoreData data)
     {
         AddScore(data.Score);

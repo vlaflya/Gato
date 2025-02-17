@@ -85,23 +85,35 @@ public class AppController : MonoBehaviour
         _shopController.MoneyUpdated += SaveMoney;
         _shopController.ItemSpawned += OnItemSpawned;
         LoadCatData();
-        LoadMoney();
-        LoadSound();
-        LoadItems();
+        LoadOverlay();
         InitializeWindows();
         foreach (var catInfo in _catData)
         {
             _spawner.LoadCat(catInfo);
         }
-        LoadScore();
-        LoadOverlay();
+
         if (_firstLaunch)
         {
+            _shopController.Initialize(0);
+            _lootboxController.Initialize(0);
+            _scoreController.InitializeEmpty();
+            LoadOverlay();
+            LoadSound();
             DOVirtual.DelayedCall(0.5f, () =>
             {
                 _tutorialController.StartTutorial();
-                ReadyLootbox();
+                _lootboxController.SetEmpty();
+                _tutorialController.ReadyLootBox += ReadyLootbox;
             });
+        }
+        else
+        {
+            _lootboxController.SetEmpty();
+            LoadItems();
+            LoadMoney();
+            LoadOverlay();
+            LoadScore();
+            LoadSound();
         }
     }
 
@@ -141,6 +153,7 @@ public class AppController : MonoBehaviour
     private void ReadyLootbox()
     {
         _heartButton.SetActive();
+        _lootboxController.SetFull();
         _heartButton.Tapped += GiveLootboxButtonClick;
     }
 
@@ -256,11 +269,7 @@ public class AppController : MonoBehaviour
         {
             if (data.UniqId.Equals(_catData[i].UniqId))
             {
-                if (_firstLaunch)
-                {
-                    _firstLaunch = false;
-                    _tutorialController.ContinueTutorial();
-                }
+                _firstLaunch = false;
                 _catData[i] = data;
                 SaveCats();
                 return;

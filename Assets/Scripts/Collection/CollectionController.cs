@@ -52,11 +52,11 @@ public class CollectionController : MonoBehaviour, IWindow
         InitializeItems();
         _forwardButton.OnClick += () => ChangeCollection(1);
         _backButton.OnClick += () => ChangeCollection(-1);
-        foreach (var rarity in _data.CatsData)
+        foreach (var rarity in _data.RarityData)
         {
-            foreach (var data in rarity.CatLootboxInfos)
+            foreach (var data in rarity.Value)
             {
-                var collectionInfo = new CatCollectionData { Name = data.Name, Rarity = rarity.Rarity, Id = data.Id };
+                var collectionInfo = new CatCollectionData { Name = data.Name, Rarity = rarity.Key, Id = data.Id };
                 if (_collectionData.ContainsKey(data.Collection))
                 {
                     _collectionData[data.Collection].Add(collectionInfo);
@@ -117,7 +117,6 @@ public class CollectionController : MonoBehaviour, IWindow
                 _items.Add(item);
             }
         }
-        Debug.Log(_items.Count);
     }
 
     private void UpdateItems()

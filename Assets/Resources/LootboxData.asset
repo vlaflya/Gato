@@ -12,325 +12,408 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65ae2b8b54d5644b9215a091222bada, type: 3}
   m_Name: LootboxData
   m_EditorClassIdentifier: 
-  CatsData:
-  - Rarity: 0
-    CatLootboxInfos:
-    - Id: 1-0
-      Name: Hisako
-      Collection: 3
-    - Id: 1-1
-      Name: Asami
-      Collection: 4
-    - Id: 1-2
-      Name: Kotone
-      Collection: 6
-    - Id: 1-3
-      Name: Akane
-      Collection: 7
-    - Id: 1-4
-      Name: Yuki
-      Collection: 12
-    - Id: 1-5
-      Name: Rin
-      Collection: 12
-    - Id: 1-6
-      Name: Kaori
-      Collection: 5
-    - Id: 1-7
-      Name: Misaki
-      Collection: 0
-    - Id: 1-8
-      Name: Nozomi
-      Collection: 13
-    - Id: 1-9
-      Name: Reiko
-      Collection: 4
-    - Id: 1-10
-      Name: Yumi
-      Collection: 9
-    - Id: 1-11
-      Name: Kiko
-      Collection: 8
-    - Id: 1-12
-      Name: Emi
-      Collection: 2
-    - Id: 1-13
-      Name: Hana
-      Collection: 11
-    - Id: 1-14
-      Name: Ayumi
-      Collection: 12
-    - Id: 1-15
-      Name: Izumi
-      Collection: 8
-    - Id: 1-16
-      Name: Momoko
-      Collection: 9
-    - Id: 1-17
-      Name: Chika
-      Collection: 4
-    - Id: 1-18
-      Name: Aiko
-      Collection: 11
-    - Id: 1-19
-      Name: Miki
-      Collection: 10
-    - Id: 1-20
-      Name: Yoko
-      Collection: 2
-    - Id: 1-21
-      Name: Asa
-      Collection: 5
-    - Id: 1-22
-      Name: Kana
-      Collection: 2
-    - Id: 1-23
-      Name: Miho
-      Collection: 7
-    - Id: 1-24
-      Name: Suki
-      Collection: 13
-    - Id: 1-26
-      Name: Asami
-      Collection: 6
-    - Id: 1-27
-      Name: Michi
-      Collection: 3
-    - Id: 1-28
-      Name: Shizuko
-      Collection: 4
-    - Id: 1-29
-      Name: Kazue
-      Collection: 9
-    - Id: 1-30
-      Name: Gina
-      Collection: 5
-    - Id: 1-31
-      Name: Katsumi
-      Collection: 7
-    - Id: 1-32
-      Name: Gina
-      Collection: 5
-    - Id: 1-33
-      Name: Masako
-      Collection: 3
-    - Id: 1-34
-      Name: Moriko
-      Collection: 6
-    - Id: 1-35
-      Name: Kimi
-      Collection: 6
-    - Id: 1-36
-      Name: Etsuko
-      Collection: 13
-    - Id: 1-37
-      Name: Kiku
-      Collection: 10
-    - Id: 1-38
-      Name: Kameko
-      Collection: 8
-    - Id: 1-39
-      Name: Emi
-      Collection: 10
-    - Id: 1-40
-      Name: Reiko
-      Collection: 12
-    - Id: 1-41
-      Name: Shiori
-      Collection: 8
-    - Id: 1-42
-      Name: Aki
-      Collection: 9
-    - Id: 1-43
-      Name: Midori
-      Collection: 11
-    - Id: 1-44
-      Name: Kohaku
-      Collection: 5
-    - Id: 1-45
-      Name: Hotaru
-      Collection: 5
-    - Id: 1-46
-      Name: Kumiko
-      Collection: 11
-    - Id: 1-47
-      Name: Ayaka
-      Collection: 3
-  - Rarity: 1
-    CatLootboxInfos:
-    - Id: 2-0
-      Name: Atsuko
-      Collection: 0
-    - Id: 2-1
-      Name: Mizuki
-      Collection: 11
-    - Id: 2-2
-      Name: Kasumi
-      Collection: 7
-    - Id: 2-3
-      Name: Tomoko
-      Collection: 11
-    - Id: 2-4
-      Name: Yuriko
-      Collection: 12
-    - Id: 2-5
-      Name: Chiasa
-      Collection: 0
-    - Id: 2-6
-      Name: Misaki
-      Collection: 1
-    - Id: 2-7
-      Name: Kayo
-      Collection: 2
-    - Id: 2-8
-      Name: Kyo
-      Collection: 10
-    - Id: 2-9
-      Name: Setsuko
-      Collection: 12
-    - Id: 2-10
-      Name: Kaede
-      Collection: 13
-    - Id: 2-11
-      Name: Minori
-      Collection: 4
-    - Id: 2-12
-      Name: Etsuko
-      Collection: 3
-    - Id: 2-13
-      Name: Naoki
-      Collection: 8
-    - Id: 2-14
-      Name: Michi
-      Collection: 9
-    - Id: 2-15
-      Name: Azumi
-      Collection: 11
-    - Id: 2-16
-      Name: Kazumi
-      Collection: 9
-    - Id: 2-17
-      Name: Mieko
-      Collection: 11
-    - Id: 2-18
-      Name: Ayumi
-      Collection: 1
-    - Id: 2-19
-      Name: Hiromi
-      Collection: 13
-    - Id: 2-20
-      Name: Kaede
-      Collection: 7
-    - Id: 2-21
-      Name: Kyou
-      Collection: 5
-    - Id: 2-22
-      Name: Yoshi
-      Collection: 4
-    - Id: 2-23
-      Name: Ayako
-      Collection: 3
-    - Id: 2-24
-      Name: Kaoru
-      Collection: 2
-    - Id: 2-25
-      Name: Masumi
-      Collection: 1
-    - Id: 2-26
-      Name: Akira
-      Collection: 12
-    - Id: 2-27
-      Name: Ko
-      Collection: 13
-  - Rarity: 2
-    CatLootboxInfos:
-    - Id: 3-0
-      Name: Kyoko
-      Collection: 6
-    - Id: 3-1
-      Name: Mi
-      Collection: 0
-    - Id: 3-2
-      Name: Hana
-      Collection: 1
-    - Id: 3-3
-      Name: Kame
-      Collection: 13
-    - Id: 3-4
-      Name: Aimi
-      Collection: 12
-    - Id: 3-5
-      Name: Mai
-      Collection: 10
-    - Id: 3-6
-      Name: Fuji
-      Collection: 3
-    - Id: 3-7
-      Name: Akemi
-      Collection: 7
-    - Id: 3-8
-      Name: Shizuka
-      Collection: 6
-    - Id: 3-9
-      Name: Kazumi
-      Collection: 10
-    - Id: 3-10
-      Name: Hanako
-      Collection: 0
-    - Id: 3-11
-      Name: Tomoko
-      Collection: 13
-    - Id: 3-12
-      Name: Ayame
-      Collection: 9
-    - Id: 3-13
-      Name: Kame
-      Collection: 7
-  - Rarity: 3
-    CatLootboxInfos:
-    - Id: 4-0
-      Name: Sayuri
-      Collection: 1
-    - Id: 4-1
-      Name: Setsuko
-      Collection: 0
-    - Id: 4-2
-      Name: Masumi
-      Collection: 8
-    - Id: 4-3
-      Name: Eri
-      Collection: 4
-    - Id: 4-4
-      Name: Kaori
-      Collection: 1
-    - Id: 4-5
-      Name: Shizuka
-      Collection: 7
-    - Id: 4-6
-      Name: Noriko
-      Collection: 9
-  - Rarity: 4
-    CatLootboxInfos:
-    - Id: 5-0
-      Name: Aya
-      Collection: 5
-    - Id: 5-1
-      Name: Hoshi
-      Collection: 6
-    - Id: 5-2
-      Name: Asami
-      Collection: 3
-    - Id: 5-3
-      Name: Kiyoko
-      Collection: 2
-    - Id: 5-4
-      Name: Nobuko
-      Collection: 1
-  - Rarity: 5
-    CatLootboxInfos:
-    - Id: 6-0
-      Name: Sakura
-      Collection: 1
-    - Id: 6-1
-      Name: Kuro
-      Collection: 0
+  Data:
+  - Id: 6-1
+    Name: Kuro
+    Rarity: 5
+    Collection: 0
+  - Id: 6-0
+    Name: Sakura
+    Rarity: 5
+    Collection: 1
+  - Id: 2-23
+    Name: Kyoru
+    Rarity: 4
+    Collection: 5
+  - Id: 5-4
+    Name: Nobuko
+    Rarity: 4
+    Collection: 1
+  - Id: 5-3
+    Name: Kiyoko
+    Rarity: 4
+    Collection: 2
+  - Id: 5-2
+    Name: Asami
+    Rarity: 4
+    Collection: 3
+  - Id: 5-1
+    Name: Shiro
+    Rarity: 5
+    Collection: 2
+  - Id: 4-6
+    Name: Noriko
+    Rarity: 4
+    Collection: 9
+  - Id: 4-5
+    Name: Shiki
+    Rarity: 4
+    Collection: 7
+  - Id: 4-4
+    Name: Kaori
+    Rarity: 3
+    Collection: 1
+  - Id: 4-3
+    Name: Eri
+    Rarity: 5
+    Collection: 4
+  - Id: 4-2
+    Name: Masumi
+    Rarity: 4
+    Collection: 8
+  - Id: 4-1
+    Name: Setsuko
+    Rarity: 3
+    Collection: 0
+  - Id: 4-0
+    Name: Sayuri
+    Rarity: 2
+    Collection: 1
+  - Id: 5-0
+    Name: Aya
+    Rarity: 3
+    Collection: 5
+  - Id: 3-13
+    Name: Karo
+    Rarity: 3
+    Collection: 7
+  - Id: 3-12
+    Name: Ayame
+    Rarity: 3
+    Collection: 9
+  - Id: 3-11
+    Name: Tomo
+    Rarity: 5
+    Collection: 13
+  - Id: 3-10
+    Name: Hanako
+    Rarity: 2
+    Collection: 0
+  - Id: 3-9
+    Name: Kazi
+    Rarity: 5
+    Collection: 10
+  - Id: 3-8
+    Name: Shizuka
+    Rarity: 4
+    Collection: 6
+  - Id: 3-7
+    Name: Akemi
+    Rarity: 2
+    Collection: 7
+  - Id: 3-6
+    Name: Fuji
+    Rarity: 3
+    Collection: 3
+  - Id: 3-5
+    Name: Mai
+    Rarity: 4
+    Collection: 10
+  - Id: 3-4
+    Name: Aimi
+    Rarity: 4
+    Collection: 12
+  - Id: 3-3
+    Name: Kame
+    Rarity: 4
+    Collection: 13
+  - Id: 3-2
+    Name: Hana
+    Rarity: 2
+    Collection: 1
+  - Id: 3-1
+    Name: Mi
+    Rarity: 2
+    Collection: 0
+  - Id: 3-0
+    Name: Kyoko
+    Rarity: 3
+    Collection: 6
+  - Id: 1-44
+    Name: Kohaku
+    Rarity: 1
+    Collection: 5
+  - Id: 1-32
+    Name: Anya
+    Rarity: 1
+    Collection: 5
+  - Id: 2-27
+    Name: Ko
+    Rarity: 2
+    Collection: 13
+  - Id: 2-26
+    Name: Akira
+    Rarity: 3
+    Collection: 12
+  - Id: 2-25
+    Name: Mako
+    Rarity: 1
+    Collection: 1
+  - Id: 2-24
+    Name: Kaoru
+    Rarity: 2
+    Collection: 2
+  - Id: 2-23
+    Name: Ayako
+    Rarity: 2
+    Collection: 3
+  - Id: 2-22
+    Name: Yoshi
+    Rarity: 4
+    Collection: 4
+  - Id: 2-20
+    Name: Kaede
+    Rarity: 1
+    Collection: 7
+  - Id: 2-19
+    Name: Hiromi
+    Rarity: 2
+    Collection: 13
+  - Id: 2-18
+    Name: Ayumi
+    Rarity: 0
+    Collection: 1
+  - Id: 2-17
+    Name: Mieko
+    Rarity: 4
+    Collection: 11
+  - Id: 2-16
+    Name: Kazumi
+    Rarity: 3
+    Collection: 9
+  - Id: 2-15
+    Name: Azumi
+    Rarity: 3
+    Collection: 11
+  - Id: 2-14
+    Name: Michi
+    Rarity: 2
+    Collection: 9
+  - Id: 2-13
+    Name: Naoki
+    Rarity: 3
+    Collection: 8
+  - Id: 2-12
+    Name: Etsuko
+    Rarity: 1
+    Collection: 3
+  - Id: 2-11
+    Name: Minori
+    Rarity: 3
+    Collection: 4
+  - Id: 2-10
+    Name: Kaede
+    Rarity: 1
+    Collection: 13
+  - Id: 2-9
+    Name: Setsu
+    Rarity: 3
+    Collection: 12
+  - Id: 2-8
+    Name: Kyo
+    Rarity: 3
+    Collection: 10
+  - Id: 2-7
+    Name: Kayo
+    Rarity: 1
+    Collection: 2
+  - Id: 2-6
+    Name: Misa
+    Rarity: 0
+    Collection: 1
+  - Id: 2-5
+    Name: Chiasa
+    Rarity: 0
+    Collection: 0
+  - Id: 2-4
+    Name: Yuriko
+    Rarity: 2
+    Collection: 12
+  - Id: 2-3
+    Name: Tomoko
+    Rarity: 3
+    Collection: 11
+  - Id: 2-2
+    Name: Kasumi
+    Rarity: 1
+    Collection: 7
+  - Id: 2-1
+    Name: Mizuki
+    Rarity: 2
+    Collection: 11
+  - Id: 1-47
+    Name: Aya-ya
+    Rarity: 1
+    Collection: 3
+  - Id: 1-46
+    Name: Kimiko
+    Rarity: 2
+    Collection: 11
+  - Id: 1-43
+    Name: Midori
+    Rarity: 1
+    Collection: 11
+  - Id: 1-42
+    Name: Aki
+    Rarity: 1
+    Collection: 9
+  - Id: 1-41
+    Name: Koko
+    Rarity: 2
+    Collection: 8
+  - Id: 1-40
+    Name: Reiko
+    Rarity: 1
+    Collection: 12
+  - Id: 1-39
+    Name: Emi
+    Rarity: 2
+    Collection: 10
+  - Id: 1-38
+    Name: Kameko
+    Rarity: 1
+    Collection: 8
+  - Id: 1-37
+    Name: Kiku
+    Rarity: 2
+    Collection: 10
+  - Id: 1-36
+    Name: Emi
+    Rarity: 0
+    Collection: 13
+  - Id: 1-35
+    Name: Kimi
+    Rarity: 2
+    Collection: 6
+  - Id: 1-34
+    Name: Moriko
+    Rarity: 1
+    Collection: 6
+  - Id: 1-33
+    Name: Masako
+    Rarity: 1
+    Collection: 3
+  - Id: 1-31
+    Name: Katsumi
+    Rarity: 0
+    Collection: 7
+  - Id: 1-30
+    Name: Gina
+    Rarity: 0
+    Collection: 5
+  - Id: 1-29
+    Name: Kazue
+    Rarity: 1
+    Collection: 9
+  - Id: 1-28
+    Name: Shizuko
+    Rarity: 0
+    Collection: 4
+  - Id: 1-27
+    Name: Miku
+    Rarity: 0
+    Collection: 3
+  - Id: 1-26
+    Name: Asami
+    Rarity: 1
+    Collection: 6
+  - Id: 1-24
+    Name: Suki
+    Rarity: 0
+    Collection: 13
+  - Id: 1-23
+    Name: Miho
+    Rarity: 0
+    Collection: 7
+  - Id: 1-22
+    Name: Kana
+    Rarity: 0
+    Collection: 2
+  - Id: 1-21
+    Name: Asa
+    Rarity: 0
+    Collection: 5
+  - Id: 1-20
+    Name: Yoko
+    Rarity: 0
+    Collection: 2
+  - Id: 1-19
+    Name: Miki
+    Rarity: 1
+    Collection: 10
+  - Id: 1-18
+    Name: Aiko
+    Rarity: 0
+    Collection: 11
+  - Id: 1-17
+    Name: Chika
+    Rarity: 0
+    Collection: 11
+  - Id: 1-16
+    Name: Momoko
+    Rarity: 0
+    Collection: 9
+  - Id: 1-15
+    Name: Izumi
+    Rarity: 0
+    Collection: 8
+  - Id: 1-14
+    Name: Ayaumi
+    Rarity: 0
+    Collection: 12
+  - Id: 1-13
+    Name: Hana
+    Rarity: 0
+    Collection: 10
+  - Id: 1-12
+    Name: Emi
+    Rarity: 0
+    Collection: 8
+  - Id: 1-11
+    Name: Kiko
+    Rarity: 0
+    Collection: 10
+  - Id: 1-10
+    Name: Yumi
+    Rarity: 0
+    Collection: 13
+  - Id: 1-9
+    Name: Reiko
+    Rarity: 0
+    Collection: 6
+  - Id: 1-8
+    Name: Nozumi
+    Rarity: 0
+    Collection: 6
+  - Id: 1-7
+    Name: Misaki
+    Rarity: 0
+    Collection: 3
+  - Id: 1-6
+    Name: Kaori
+    Rarity: 0
+    Collection: 7
+  - Id: 1-5
+    Name: Rin
+    Rarity: 0
+    Collection: 5
+  - Id: 1-4
+    Name: Yuki
+    Rarity: 0
+    Collection: 9
+  - Id: 1-3
+    Name: Akane
+    Rarity: 0
+    Collection: 4
+  - Id: 1-2
+    Name: Kotone
+    Rarity: 0
+    Collection: 3
+  - Id: 1-1
+    Name: Asami
+    Rarity: 0
+    Collection: 6
+  - Id: 1-0
+    Name: Hisako
+    Rarity: 0
+    Collection: 13

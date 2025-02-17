@@ -33,9 +33,8 @@ public class ShopController : MonoBehaviour, IWindow
     private const string ITEM_PATH = "Items/";
     private const int SCORE_TO_MONEY = 1;
 
-    public void Initialize(int savedMoney)
+    private void Start()
     {
-        _money = savedMoney;
         transform.localScale = Vector3.zero;
         _moneyField.text = _money.ToString() + "<sprite=0>";
         _openButton.OnClick += ChangeState;
@@ -45,6 +44,11 @@ public class ShopController : MonoBehaviour, IWindow
         {
             button.OnClick += UpdateDetails;
         }
+    }
+
+    public void Initialize(int savedMoney)
+    {
+        _money = savedMoney;
     }
 
     public void SpawnItemsFromSave(List<ItemData> itemData)

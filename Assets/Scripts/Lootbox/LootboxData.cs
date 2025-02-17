@@ -5,13 +5,43 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LootboxData", menuName = "LootboxData", order = 1)]
 public class LootboxData : ScriptableObject
 {
-    public List<LootboxCatsData> CatsData;
-    [Serializable]
-    public class LootboxCatsData
+    public Dictionary<Rarity, List<CatLootboxInfo>> RarityData
     {
-        public Rarity Rarity;
-        public List<CatLootboxInfo> CatLootboxInfos;
+        get
+        {
+            if (_rarityData != null)
+            {
+                return _rarityData;
+            }
+            else
+            {
+                _rarityData = new Dictionary<Rarity, List<CatLootboxInfo>>();
+                foreach (var data in Data)
+                {
+                    if (_rarityData.ContainsKey(data.Rarity))
+                    {
+                        if (_rarityData[data.Rarity] == null)
+                        {
+                            _rarityData[data.Rarity] = new List<CatLootboxInfo> { data };
+                        }
+                        else
+                        {
+                            _rarityData[data.Rarity].Add(data);
+                        }
+                    }
+                    else
+                    {
+                        _rarityData.Add(data.Rarity, new List<CatLootboxInfo> { data });
+                    }
+                }
+                return _rarityData;
+            }
+        }
     }
+    public List<CatLootboxInfo> Data;
+
+    private Dictionary<Rarity, List<CatLootboxInfo>> _rarityData;
+
 }
 
 [Serializable]
@@ -19,6 +49,7 @@ public class CatLootboxInfo
 {
     public string Id;
     public string Name;
+    public Rarity Rarity;
     public Collection Collection;
 }
 

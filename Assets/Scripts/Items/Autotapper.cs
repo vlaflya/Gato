@@ -7,7 +7,7 @@ using UniRx;
 public class Autotapper : MonoBehaviour, IItem
 {
     [SerializeField]
-    private float _time;
+    private int _maxTaps;
     [SerializeField]
     private Transform _visuals;
     [SerializeField]
@@ -17,6 +17,7 @@ public class Autotapper : MonoBehaviour, IItem
     [SerializeField]
     private ParticleSystem _particles;
     private ItemData _itemData;
+    private int _taps;
     private Coroutine _tapCoroutine;
 
     public event Action<ItemData> DataChanged;
@@ -68,19 +69,16 @@ public class Autotapper : MonoBehaviour, IItem
         DataChanged?.Invoke(_itemData);
     }
 
-    private IEnumerator DestroyCoroutine()
-    {
-        yield return new WaitForSecondsRealtime(_time);
-        if (_tapCoroutine != null)
-        {
-            StopCoroutine(_tapCoroutine);
-        }
-        Destroy(gameObject);
-    }
-
     private IEnumerator TapCoroutine()
     {
         yield return new WaitForSecondsRealtime(_tapDelay);
+        if (_maxTaps > 0)
+        {
+            if (_taps > _maxTaps)
+            {
+                Destroy(gameObject);
+            }
+        }
         var colliders = Physics2D.OverlapCircleAll(_tapPoint.position, 0.1f);
         if (colliders.Length > 0)
         {
@@ -95,6 +93,7 @@ public class Autotapper : MonoBehaviour, IItem
                     seq.Append(_visuals.DOScale(Vector3.one * 0.7f, _tapDelay / 3)).SetEase(Ease.InOutQuad);
                     seq.AppendCallback(() =>
                     {
+                        _taps++;
                         cat.Tap();
                         _particles.Play();
                         _tapCoroutine = StartCoroutine(TapCoroutine());

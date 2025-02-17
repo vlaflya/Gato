@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3113a28151f19439c855950977999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 0
+  _maxTaps: 40000
   _visuals: {fileID: 6012914773027339837}
   _tapPoint: {fileID: 5469791705005211072}
   _tapDelay: 0.3
