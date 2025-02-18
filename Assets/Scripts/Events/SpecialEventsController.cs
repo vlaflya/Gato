@@ -9,7 +9,7 @@ public class SpecialEventsController : MonoBehaviour
 
     private List<IEvent> _events = new List<IEvent>();
     private IEvent _currnetEvent;
-    private const float EVENT_LENGHT = 10;
+    private const float EVENT_LENGHT = 20;
 
     private void Start()
     {

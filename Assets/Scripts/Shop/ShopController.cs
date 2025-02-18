@@ -60,7 +60,7 @@ public class ShopController : MonoBehaviour, IWindow
         }
     }
 
-    public void AddScore(int money)
+    public void AddMoney(int money)
     {
         _money += money;
         _moneyField.text = _money.ToString() + "<sprite=0>";

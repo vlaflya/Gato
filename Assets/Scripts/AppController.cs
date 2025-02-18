@@ -78,7 +78,7 @@ public class AppController : MonoBehaviour
         _transparentWindow.Initialize();
         _transparentWindow.OvelayChanged += OnOverlayChanged;
         _lootboxController.GaveCat += OnLootBoxOpened;
-        _lootboxController.GiveLootbox += ReadyLootbox;
+        _lootboxController.GiveLootbox += ReadyEvent;
         _lootboxController.GiveEvent += ReadyEvent;
         _spawner.SpawnedCat += OnSpawnedCat;
         _soundButton.OnClick += ChangeSound;
@@ -327,7 +327,7 @@ public class AppController : MonoBehaviour
             Y = _scoreController.transform.position.y,
             Scale = _scoreController.transform.localScale.y
         };
-        _shopController.AddScore(1);
+        _shopController.AddMoney(1);
         _lootboxController.CalculateGiveout(_scoreController.TotalScore, _currentIteration);
         PlayerPrefs.SetString(SCORE_SAVE_KEY, JsonConvert.SerializeObject(scoreData));
     }

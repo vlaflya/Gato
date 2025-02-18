@@ -6,9 +6,6 @@ public class GoldRushEvent : MonoBehaviour, IEvent
     [SerializeField]
     private ParticleSystem _particles;
 
-    [SerializeField]
-    private float _eventTime;
-
     private List<CatController> _cats;
 
     private void Start()

@@ -230,7 +230,7 @@ MonoBehaviour:
   _maxTaps: 10000
   _visuals: {fileID: 3431076036405922567}
   _tapPoint: {fileID: 5469791705005211072}
-  _tapDelay: 0.8
+  _tapDelay: 0.3
   _particles: {fileID: 8797283100327884619}
 --- !u!50 &7086929484280083104
 Rigidbody2D:
